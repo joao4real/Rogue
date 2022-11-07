@@ -2,17 +2,17 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Door extends GameElement{
+public class Sword extends GameElement{
 	
-	public Door(Point2D point){
+	public Sword(Point2D point){
 		position = point;
 	}
 
 	@Override
 	public String getName() {
-		return "DoorClosed";
+		return "Sword";
 	}
-	
+
 	@Override
 	public Point2D getPosition() {
 		return position;

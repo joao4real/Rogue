@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
+import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Point2D;
@@ -14,6 +15,7 @@ public class EngineExample implements Observer {
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
 	public static final int STARTING_MAP = 0;
+	private Room currentRoom;
 
 	private static EngineExample INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
@@ -35,8 +37,8 @@ public class EngineExample implements Observer {
 	}
 
 	public void start() {
-		System.out.println("aki");
 		addRooms();
+		currentRoom = rooms.get(STARTING_MAP);
 		gui.addImages(rooms.get(STARTING_MAP).getMap());
 		addObjects();
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
@@ -44,13 +46,16 @@ public class EngineExample implements Observer {
 	}
 
 	private void addRooms() {
-		for (int i = 0; i < getNumberOfRooms("rooms"); i++)
-			rooms.add(new Room("rooms/room" + i + ".txt"));
+//		for (int i = 0; i < 4; i++)
+//			rooms.add(new Room("rooms/room" + i + ".txt"));
+		rooms.add(new Room("rooms/room0.txt"));
 	}
 
 	private void addObjects() {
 		hero = new Hero(new Point2D(1, 1));
 		gui.addImage(hero);
+		for(ImageTile e : currentRoom.getElements())
+			gui.addImage(e);
 	}
 
 	@Override

@@ -10,14 +10,15 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room {
 
-	private ArrayList<ImageTile> imageList;
-	private ArrayList<GameElement> elementList;
+	private ArrayList<ImageTile> imageList = new ArrayList<>();
+	private ArrayList<ImageTile> elementList = new ArrayList<>();
 
 	public Room(String name) {
 		addMapAndElements(name);
 	}
 
 	public void addMapAndElements(String name) {
+		System.out.println("aki");
 		File file = new File(name);
 		try {
 			int y = 0;
@@ -26,10 +27,12 @@ public class Room {
 				String line = roomScanner.nextLine();
 				if (y < EngineExample.GRID_HEIGHT)
 					for (int x = 0; x != EngineExample.GRID_WIDTH; x++)
-						imageList.add(GameElement.create(line.substring(x,x), new Point2D(x,y)));
-				if(y > EngineExample.GRID_HEIGHT){
+						imageList.add(GameElement.create(line.substring(x, x + 1), new Point2D(x, y)));
+				if (y > EngineExample.GRID_HEIGHT) {
 					Scanner lineScanner = new Scanner(line);
-					elementList.add(GameElement.create(lineScanner.next(), new Point2D(lineScanner.nextInt(), lineScanner.nextInt())));
+					lineScanner.useDelimiter(",");
+					elementList.add(GameElement.create(lineScanner.next(),
+							new Point2D(lineScanner.nextInt(), lineScanner.nextInt())));
 					lineScanner.close();
 				}
 				y++;
@@ -42,5 +45,9 @@ public class Room {
 
 	public ArrayList<ImageTile> getMap() {
 		return imageList;
+	}
+	
+	public ArrayList<ImageTile> getElements() {
+		return elementList;
 	}
 }

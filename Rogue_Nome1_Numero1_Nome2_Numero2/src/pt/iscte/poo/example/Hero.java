@@ -6,12 +6,8 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Hero extends GameElement implements Movable {
 
-	private static final int MAXIMUM_HP = 10;
-	private static final int DAMAGE = 1;
-
-	public Hero(Point2D position) {
-		super.position = position;
-		super.hitpoints = MAXIMUM_HP;
+	public Hero(Point2D point) {
+		position = point;
 	}
 
 	@Override
