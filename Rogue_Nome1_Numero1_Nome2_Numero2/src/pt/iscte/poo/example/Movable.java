@@ -4,7 +4,7 @@ public interface Movable {
 
 	public String getName();
 
-	public void move(int key);
+	public void move(int key, Room room);
 
 	public int getLayer();
 

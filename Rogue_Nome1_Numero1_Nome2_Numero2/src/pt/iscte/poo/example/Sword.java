@@ -5,7 +5,8 @@ import pt.iscte.poo.utils.Point2D;
 public class Sword extends GameElement{
 	
 	public Sword(Point2D point){
-		position = point;
+		position = point;		
+		isWalkable = false;
 	}
 
 	@Override
@@ -22,10 +23,4 @@ public class Sword extends GameElement{
 	public int getLayer() {
 		return 0;
 	}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-	}
-
 }

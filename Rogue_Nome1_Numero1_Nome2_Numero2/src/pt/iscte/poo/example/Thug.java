@@ -6,6 +6,7 @@ public class Thug extends GameElement implements Movable{
 	
 	public Thug(Point2D point){
 		position = point;
+		isWalkable = false;
 	}
 
 	@Override
@@ -24,14 +25,8 @@ public class Thug extends GameElement implements Movable{
 	}
 	
 	@Override
-	public void move(int key) {
+	public void move(int key, Room room) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-	}
-	
 }

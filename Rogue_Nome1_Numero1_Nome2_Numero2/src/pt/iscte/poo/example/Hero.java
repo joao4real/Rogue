@@ -8,6 +8,7 @@ public class Hero extends GameElement implements Movable {
 
 	public Hero(Point2D point) {
 		position = point;
+		isWalkable = false;
 	}
 
 	@Override
@@ -25,18 +26,12 @@ public class Hero extends GameElement implements Movable {
 		return 0;
 	}
 
-	public void move(int key) {
+	public void move(int key, Room room) {
 		Direction direction = Direction.directionFor(key);
 		Vector2D vector = direction.asVector();
 		Point2D newPosition = super.position.plus(vector);
-		if (isWalkable(newPosition)) {
+		if (room.isPositionWalkable(newPosition)) {
 			super.position = newPosition;
+		}
 	}
-
-}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-			}
 }

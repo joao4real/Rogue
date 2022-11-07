@@ -66,7 +66,7 @@ public class EngineExample implements Observer {
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
 		if (Direction.isDirection(key)) {
-			hero.move(key);
+			hero.move(key,currentRoom);
 			turns++;
 		}
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);

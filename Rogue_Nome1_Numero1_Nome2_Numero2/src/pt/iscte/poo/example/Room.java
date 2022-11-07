@@ -49,4 +49,13 @@ public class Room {
 			System.err.println("Ficheiro nao encontrado");
 		}
 	}
+
+	public boolean isPositionWalkable(Point2D point) {
+        if (!imageList.get(point.getX() + point.getY() * EngineExample.GRID_HEIGHT).isWalkable)
+            return false;
+        for (GameElement e : elementList)
+            if (!e.isWalkable && e.getPosition().equals(point))
+                return false;
+        return true;
+    }
 }

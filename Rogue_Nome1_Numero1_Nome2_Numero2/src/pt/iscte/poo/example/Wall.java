@@ -8,6 +8,7 @@ public class Wall extends GameElement {
 
 	public Wall(Point2D point) {
 		position = point;
+		isWalkable = false;
 	}
 
 	@Override
@@ -24,10 +25,4 @@ public class Wall extends GameElement {
 	public int getLayer() {
 		return 0;
 	}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-	}
-
 }

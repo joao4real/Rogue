@@ -6,6 +6,7 @@ public class HealingPotion extends GameElement{
 	
 	public HealingPotion(Point2D point){
 		position = point;
+		isWalkable = false;
 	}
 
 	@Override
@@ -22,10 +23,4 @@ public class HealingPotion extends GameElement{
 	public int getLayer() {
 		return 0;
 	}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-	}
-
 }

@@ -8,6 +8,7 @@ public class Skeleton extends GameElement implements Movable {
 
 	public Skeleton(Point2D point){
 		position=point;
+		isWalkable = false;
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class Skeleton extends GameElement implements Movable {
 	}
 
 	@Override
-	public void move(int key) {
+	public void move(int key, Room room) {
 		
 	}
 
@@ -29,10 +30,4 @@ public class Skeleton extends GameElement implements Movable {
 	public int getLayer() {
 		return 0;
 	}
-
-	@Override
-	public boolean isWalkable(Point2D point) {
-		return false;
-	}
-
 }

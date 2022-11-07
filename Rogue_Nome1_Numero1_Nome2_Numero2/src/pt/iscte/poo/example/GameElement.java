@@ -6,6 +6,7 @@ import pt.iscte.poo.utils.Point2D;
 public abstract class GameElement implements ImageTile {
 
 	public Point2D position;
+	public boolean isWalkable = false;
 
 	public static GameElement create(String code, Point2D point) {
 		switch (code) {
@@ -23,7 +24,4 @@ public abstract class GameElement implements ImageTile {
 		default: return null;
 		}
 	}
-	
-	public abstract boolean isWalkable (Point2D point) ;
-
 }
