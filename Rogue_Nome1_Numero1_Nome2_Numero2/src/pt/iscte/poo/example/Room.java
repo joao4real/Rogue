@@ -17,6 +17,14 @@ public class Room {
 		addMapAndElements(name);
 	}
 
+	public ArrayList<ImageTile> getMap() {
+		return imageList;
+	}
+	
+	public ArrayList<ImageTile> getElements() {
+		return elementList;
+	}
+	
 	public void addMapAndElements(String name) {
 		System.out.println("aki");
 		File file = new File(name);
@@ -43,11 +51,7 @@ public class Room {
 		}
 	}
 
-	public ArrayList<ImageTile> getMap() {
-		return imageList;
-	}
-	
-	public ArrayList<ImageTile> getElements() {
-		return elementList;
+	public boolean isWalkable(Point2D point){
+		if(imageList.get(point.getX() + point.getY()*EngineExample.GRID_HEIGHT).isWalkable))
 	}
 }
