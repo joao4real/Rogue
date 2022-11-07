@@ -27,3 +27,4 @@ public class Floor implements ImageTile {
 	}
 
 }
+//9,5 a Eletro
