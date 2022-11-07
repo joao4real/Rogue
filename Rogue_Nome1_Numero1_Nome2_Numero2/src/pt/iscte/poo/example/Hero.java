@@ -1,7 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.util.List;
-
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
@@ -21,14 +19,9 @@ public class Hero extends GameElement implements Movable {
 		return "Hero";
 	}
 
-	public void move(int key) {
-//		Direction randDirection = Direction.random();
-//		Vector2D randVector = randDirection.asVector(); 
-//		position = position.plus(randVector);
-		Direction direction = Direction.directionFor(key);
-		Vector2D vector = direction.asVector();
-		Point2D newPosition = super.position.plus(vector);
-		super.position = newPosition;
+	@Override
+	public Point2D getPosition() {
+		return position;
 	}
 
 	@Override
@@ -36,8 +29,11 @@ public class Hero extends GameElement implements Movable {
 		return 0;
 	}
 
-	@Override
-	public void setHitpoints(int value) {
-		super.hitpoints = Math.min(super.hitpoints + value, MAXIMUM_HP);
+	public void move(int key) {
+		Direction direction = Direction.directionFor(key);
+		Vector2D vector = direction.asVector();
+		Point2D newPosition = super.position.plus(vector);
+		super.position = newPosition;
 	}
+
 }

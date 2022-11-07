@@ -1,14 +1,13 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class Wall implements ImageTile {
+public class Wall extends GameElement {
 
 	private Point2D position;
 
-	public Wall(Point2D position) {
-		this.position = position;
+	public Wall(Point2D point) {
+		position = point;
 	}
 
 	@Override

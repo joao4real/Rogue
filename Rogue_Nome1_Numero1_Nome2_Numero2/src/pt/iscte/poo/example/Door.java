@@ -2,27 +2,20 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Skeleton extends GameElement implements Movable {
+public class Door extends GameElement{
 	
-//	private static final int MAXIMUM_HP = 5;
-
-	public Skeleton(Point2D point){
-		position=point;
+	public Door(Point2D point){
+		position = point;
 	}
 
 	@Override
 	public String getName() {
-		return "Skeleton";
+		return "Door";
 	}
 	
 	@Override
 	public Point2D getPosition() {
 		return position;
-	}
-
-	@Override
-	public void move(int key) {
-		
 	}
 
 	@Override

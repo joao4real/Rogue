@@ -2,24 +2,22 @@ package pt.iscte.poo.example;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Direction; //added
-import java.awt.event.KeyEvent;
 
 public class EngineExample implements Observer {
 
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
-	public static final int STARTING_MAP = 3;
+	public static final int STARTING_MAP = 0;
 
 	private static EngineExample INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-	private List<Room> rooms = new ArrayList<>();
+	private ArrayList<Room> rooms = new ArrayList<>();
 
 	private Hero hero;
 	private int turns;
@@ -37,6 +35,7 @@ public class EngineExample implements Observer {
 	}
 
 	public void start() {
+		System.out.println("aki");
 		addRooms();
 		gui.addImages(rooms.get(STARTING_MAP).getMap());
 		addObjects();

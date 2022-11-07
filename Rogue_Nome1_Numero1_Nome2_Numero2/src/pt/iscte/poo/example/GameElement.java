@@ -3,22 +3,25 @@ package pt.iscte.poo.example;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public abstract class GameElement implements ImageTile{
-	
+public abstract class GameElement implements ImageTile {
+
 	public int hitpoints;
 	public int damage;
 	public Point2D position;
 
-	@Override
-	public abstract String getName();
-
-	@Override
-	public Point2D getPosition() {
-		return position;
+	public static GameElement create(String code, Point2D point) {
+		switch (code) {
+		case "Armor": return new Armor(point);
+		case "Bat": return new Bat(point);
+		case " ": return new Floor(point);
+		case "HealingPotion": return new HealingPotion(point);
+		case "Key": return new Key(point);
+		case "Skeleton": return new Skeleton(point);
+		case "Thug": return new Thug(point);
+		case "Treasure": return new Treasure(point);
+		case "#": return new Wall(point);
+		default: return new Bat(point);
+		}
 	}
 
-	@Override
-	public abstract int getLayer();
-
-	public abstract void setHitpoints(int value);
 }
