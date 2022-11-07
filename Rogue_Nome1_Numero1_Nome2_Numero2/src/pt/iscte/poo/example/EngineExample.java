@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Point2D;
@@ -37,9 +36,10 @@ public class EngineExample implements Observer {
 	}
 
 	public void start() {
+		hero = new Hero(new Point2D(1, 1));
 		addRooms();
 		currentRoom = rooms.get(STARTING_MAP);
-		for(GameElement g : currentRoom.getMap()) {
+		for (GameElement g : currentRoom.getMap()) {
 			gui.addImage(g);
 		}
 		addObjects();
@@ -50,13 +50,12 @@ public class EngineExample implements Observer {
 	private void addRooms() {
 //		for (int i = 0; i < 4; i++)
 //			rooms.add(new Room("rooms/room" + i + ".txt"));
-		rooms.add(new Room("rooms/room0.txt"));
+		rooms.add(new Room("rooms/room0.txt", hero));
 	}
 
 	private void addObjects() {
-		hero = new Hero(new Point2D(1, 1));
 		gui.addImage(hero);
-		for(GameElement e : currentRoom.getElements())
+		for (GameElement e : currentRoom.getElements())
 			gui.addImage(e);
 	}
 
@@ -66,7 +65,8 @@ public class EngineExample implements Observer {
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
 		if (Direction.isDirection(key)) {
-			hero.move(key,currentRoom);
+			hero.setKey(key);
+			hero.move(currentRoom);
 			turns++;
 		}
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);

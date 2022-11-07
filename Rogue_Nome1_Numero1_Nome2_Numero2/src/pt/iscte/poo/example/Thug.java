@@ -2,9 +2,9 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Thug extends GameElement implements Movable{
-	
-	public Thug(Point2D point){
+public class Thug extends GameElement implements Movable {
+
+	public Thug(Point2D point) {
 		position = point;
 		isWalkable = false;
 	}
@@ -23,10 +23,9 @@ public class Thug extends GameElement implements Movable{
 	public int getLayer() {
 		return 0;
 	}
-	
+
 	@Override
-	public void move(int key, Room room) {
-		// TODO Auto-generated method stub
-		
+	public void move(Room room) {
 	}
+
 }

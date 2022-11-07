@@ -5,15 +5,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 public class Room {
-
+	
+	private Hero hero;
 	private ArrayList<GameElement> imageList = new ArrayList<>();
 	private ArrayList<GameElement> elementList = new ArrayList<>();
 
-	public Room(String name) {
+	public Room(String name, Hero hero) {
+		this.hero = hero;
 		addMapAndElements(name);
 	}
 

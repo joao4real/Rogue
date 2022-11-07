@@ -6,6 +6,8 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Hero extends GameElement implements Movable {
 
+	private int key;
+
 	public Hero(Point2D point) {
 		position = point;
 		isWalkable = false;
@@ -26,7 +28,11 @@ public class Hero extends GameElement implements Movable {
 		return 0;
 	}
 
-	public void move(int key, Room room) {
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+	public void move(Room room) {
 		Direction direction = Direction.directionFor(key);
 		Vector2D vector = direction.asVector();
 		Point2D newPosition = super.position.plus(vector);
@@ -34,4 +40,5 @@ public class Hero extends GameElement implements Movable {
 			super.position = newPosition;
 		}
 	}
+
 }
