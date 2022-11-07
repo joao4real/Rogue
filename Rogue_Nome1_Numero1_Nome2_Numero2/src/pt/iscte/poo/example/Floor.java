@@ -26,4 +26,4 @@ public class Floor implements ImageTile {
 		return 0;
 	}
 
-}
+}//
