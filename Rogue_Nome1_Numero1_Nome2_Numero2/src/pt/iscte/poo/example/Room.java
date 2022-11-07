@@ -10,23 +10,22 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room {
 
-	private ArrayList<ImageTile> imageList = new ArrayList<>();
-	private ArrayList<ImageTile> elementList = new ArrayList<>();
+	private ArrayList<GameElement> imageList = new ArrayList<>();
+	private ArrayList<GameElement> elementList = new ArrayList<>();
 
 	public Room(String name) {
 		addMapAndElements(name);
 	}
 
-	public ArrayList<ImageTile> getMap() {
+	public ArrayList<GameElement> getMap() {
 		return imageList;
 	}
-	
-	public ArrayList<ImageTile> getElements() {
+
+	public ArrayList<GameElement> getElements() {
 		return elementList;
 	}
-	
+
 	public void addMapAndElements(String name) {
-		System.out.println("aki");
 		File file = new File(name);
 		try {
 			int y = 0;
@@ -49,9 +48,5 @@ public class Room {
 		} catch (FileNotFoundException e) {
 			System.err.println("Ficheiro nao encontrado");
 		}
-	}
-
-	public boolean isWalkable(Point2D point){
-		if(imageList.get(point.getX() + point.getY()*EngineExample.GRID_HEIGHT).isWalkable))
 	}
 }

@@ -29,7 +29,14 @@ public class Hero extends GameElement implements Movable {
 		Direction direction = Direction.directionFor(key);
 		Vector2D vector = direction.asVector();
 		Point2D newPosition = super.position.plus(vector);
-		super.position = newPosition;
+		if (isWalkable(newPosition)) {
+			super.position = newPosition;
 	}
 
+}
+
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return false;
+			}
 }

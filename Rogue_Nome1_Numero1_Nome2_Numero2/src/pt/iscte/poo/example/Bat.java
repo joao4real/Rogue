@@ -28,4 +28,9 @@ public class Bat extends GameElement implements Movable{
 		
 	}
 
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return false;
+	}
+
 }

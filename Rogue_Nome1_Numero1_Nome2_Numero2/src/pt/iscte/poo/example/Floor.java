@@ -8,7 +8,6 @@ public class Floor extends GameElement {
 
 	public Floor(Point2D point) {
 		position = point;
-		isWalkable = true;
 	}
 
 	@Override
@@ -26,4 +25,10 @@ public class Floor extends GameElement {
 		return 0;
 	}
 
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return true;
+	}
+
+	
 }

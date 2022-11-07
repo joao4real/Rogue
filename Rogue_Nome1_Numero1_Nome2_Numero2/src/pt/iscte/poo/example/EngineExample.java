@@ -39,7 +39,9 @@ public class EngineExample implements Observer {
 	public void start() {
 		addRooms();
 		currentRoom = rooms.get(STARTING_MAP);
-		gui.addImages(rooms.get(STARTING_MAP).getMap());
+		for(GameElement g : currentRoom.getMap()) {
+			gui.addImage(g);
+		}
 		addObjects();
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
 		gui.update();
@@ -54,7 +56,7 @@ public class EngineExample implements Observer {
 	private void addObjects() {
 		hero = new Hero(new Point2D(1, 1));
 		gui.addImage(hero);
-		for(ImageTile e : currentRoom.getElements())
+		for(GameElement e : currentRoom.getElements())
 			gui.addImage(e);
 	}
 

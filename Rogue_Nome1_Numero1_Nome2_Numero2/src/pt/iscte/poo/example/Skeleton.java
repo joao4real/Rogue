@@ -30,4 +30,9 @@ public class Skeleton extends GameElement implements Movable {
 		return 0;
 	}
 
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return false;
+	}
+
 }

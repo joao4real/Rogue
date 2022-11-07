@@ -23,4 +23,9 @@ public class Armor extends GameElement{
 		return 0;
 	}
 
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return false;
+	}
+
 }

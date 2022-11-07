@@ -28,6 +28,10 @@ public class Thug extends GameElement implements Movable{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isWalkable(Point2D point) {
+		return false;
+	}
 	
 }
-//TESTE
