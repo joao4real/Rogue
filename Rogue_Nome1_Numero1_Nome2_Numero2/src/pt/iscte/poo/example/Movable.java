@@ -5,10 +5,10 @@ public interface Movable {
 	public String getName();
 
 	public void move(Room room);
-
-	public int getLayer();
 	
-	public void attack(Room room);
+	public int getDamage();
+	
+//	public void attack(Room room);
 	
 	public int getHitpoints();
 	

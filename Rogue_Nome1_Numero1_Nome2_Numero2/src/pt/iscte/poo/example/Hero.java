@@ -1,7 +1,5 @@
 package pt.iscte.poo.example;
 
-import javax.lang.model.element.Element;
-
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
@@ -10,14 +8,14 @@ public class Hero extends GameElement implements Movable {
 
 	public static final int MAXIMUM_HP = 10;
 	private static final int DAMAGE = -1;
-	private int HERO_HP;
+	private int heroHp;
 	private int key;
 	private GameElement opponent;
 
 	public Hero(Point2D point) {
 		position = point;
 		isWalkable = false;
-		setHitpoints(MAXIMUM_HP);
+		heroHp = MAXIMUM_HP;
 	}
 
 	@Override
@@ -35,6 +33,11 @@ public class Hero extends GameElement implements Movable {
 		return 0;
 	}
 
+	@Override
+	public int getDamage() {
+		return DAMAGE;
+	}
+
 	public void setKey(int key) {
 		this.key = key;
 	}
@@ -42,37 +45,45 @@ public class Hero extends GameElement implements Movable {
 	public void move(Room room) {
 		Direction direction = Direction.directionFor(key);
 		Vector2D vector = direction.asVector();
-		Point2D newPosition = super.position.plus(vector);
-		if (room.isPositionWalkable(newPosition)) {
-			for (GameElement e : room.getElements()) {
-				if (newPosition.equals(e.position) && e instanceof Movable) {
-					opponent = e;
-					attack(room);
-					return;
-				}
-			}
-			super.position = newPosition;
+		Point2D newPoint = super.position.plus(vector);
+		if (room.isPositionWalkable(newPoint))
+			super.position = newPoint;
+		else {
+			GameElement e = room.getElement(newPoint);
+//			if (e instanceof Movable) {
+//				Movable m = (Movable) e;
+//				m.setHitpoints(DAMAGE);
+//			}
 		}
+
 	}
 
-	@Override
-	public void attack(Room room) {
-		int index = room.getElements().indexOf(opponent);
-		GameElement e = room.getElements().get(index);
-		if (e instanceof Movable) {
-			Movable m = (Movable) e;
-			m.setHitpoints(DAMAGE);
-		}
-	}
+//	@Override
+//	public void attack(Room room) {
+//		int index = room.getElements().indexOf(opponent);
+//		GameElement e = room.getElements().get(index);
+//		if (e instanceof Movable) {
+//			Movable m = (Movable) e;
+//			m.setHitpoints(DAMAGE);
+//		}
+//	}
 
 	@Override
 	public int getHitpoints() {
-		return HERO_HP;
-	} 
+		return heroHp;
+	}
 
 	@Override
 	public void setHitpoints(int value) {
-		HERO_HP += value;
+		heroHp += value;
 	}
+
+//	for (GameElement e : room.getElements()) {
+//		if (newPosition.equals(e.position) && e instanceof Movable) {
+//			opponent = e;
+//			attack(room);
+//			return;
+//		}
+//	}
 
 }

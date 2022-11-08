@@ -7,14 +7,14 @@ public class Skeleton extends GameElement implements Movable {
 
 	private static final int DAMAGE = -1;
 	private static final int MAXIMUM_HP = 5;
-	private int SKELETON_HP;
+	private int skeletonHp;
 	private boolean moveTurn = true;
 
 	public Skeleton(Point2D point) {
 		position = point;
 		isWalkable = false;
-		setHitpoints(MAXIMUM_HP);
-		
+		skeletonHp = MAXIMUM_HP;
+
 	}
 
 	@Override
@@ -31,6 +31,11 @@ public class Skeleton extends GameElement implements Movable {
 	public int getLayer() {
 		return 0;
 	}
+	
+	@Override
+	public int getDamage() {
+		return DAMAGE;
+	}
 
 	@Override
 	public void move(Room room) {
@@ -39,24 +44,23 @@ public class Skeleton extends GameElement implements Movable {
 			Point2D newPoint = super.position.plus(vector);
 			if (room.isPositionWalkable(newPoint))
 				super.position = newPoint;
-			else if (newPoint.equals(room.getHero().getPosition()))
-				attack(room);		
 			moveTurn = false;
 		} else
 			moveTurn = true;
 	}
 
-	@Override
-	public void attack(Room room) {
-		room.getHero().setHitpoints(DAMAGE);		
-	}
+//	@Override
+//	public void attack(Room room) {
+//		room.getHero().setHitpoints(DAMAGE);		
+//	}
 
 	public int getHitpoints() {
-		return SKELETON_HP;
+		return skeletonHp;
 	}
 
 	public void setHitpoints(int value) {
-		SKELETON_HP += value;
+		System.out.println(skeletonHp);
+		skeletonHp += value;
 	}
 
 }

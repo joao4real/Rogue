@@ -25,6 +25,10 @@ public class Room {
 	public ArrayList<GameElement> getElements() {
 		return elementList;
 	}
+	
+	public GameElement getElement(Point2D point) {
+		return elementList.get(pointToIndex(point));
+	}
 
 	public Hero getHero() {
 		return hero;
@@ -58,11 +62,15 @@ public class Room {
 	public boolean isPositionWalkable(Point2D point) {
 		if (hero.getPosition().equals(point))
 			return false;
-		if (!imageList.get(point.getX() + point.getY() * EngineExample.GRID_HEIGHT).isWalkable)
+		if (!imageList.get(pointToIndex(point)).isWalkable)
 			return false;
 		for (GameElement e : elementList)
 			if (!e.isWalkable && e.getPosition().equals(point))
 				return false;
 		return true;
+	}
+
+	private int pointToIndex(Point2D point){
+		return point.getX() + point.getY() * EngineExample.GRID_HEIGHT;
 	}
 }
