@@ -3,6 +3,8 @@ package pt.iscte.poo.example;
 import java.io.File;
 import java.util.ArrayList;
 
+import java.util.Iterator;
+
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
@@ -69,11 +71,17 @@ public class EngineExample implements Observer {
 			hero.move(currentRoom);
 			turns++;
 		}
-		for (GameElement e : currentRoom.getElements())
+		Iterator<GameElement> it = currentRoom.getElements().iterator();
+		while (it.hasNext()) {
+			GameElement e = it.next();
 			if (e instanceof Movable) {
 				Movable m = (Movable) e;
-				m.move(currentRoom);
+				if (m.getHitpoints() <= 0)
+					currentRoom.getElements().remove(e);
+				else
+					m.move(currentRoom);
 			}
+		}
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
 		gui.update();
 	}

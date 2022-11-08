@@ -50,10 +50,10 @@ public class Hero extends GameElement implements Movable {
 			super.position = newPoint;
 		else {
 			GameElement e = room.getElement(newPoint);
-//			if (e instanceof Movable) {
-//				Movable m = (Movable) e;
-//				m.setHitpoints(DAMAGE);
-//			}
+			if (e instanceof Movable) {
+				Movable m = (Movable) e;
+				m.setHitpoints(DAMAGE);
+			}
 		}
 
 	}
