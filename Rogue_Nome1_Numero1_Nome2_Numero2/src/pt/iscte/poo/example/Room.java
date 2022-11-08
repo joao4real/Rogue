@@ -26,6 +26,10 @@ public class Room {
 		return elementList;
 	}
 
+	public Hero getHero(){
+		return hero;
+	}
+	
 	public void addMapAndElements(String name) {
 		File file = new File(name);
 		try {

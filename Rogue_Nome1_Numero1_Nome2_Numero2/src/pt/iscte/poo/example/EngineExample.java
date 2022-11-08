@@ -69,6 +69,11 @@ public class EngineExample implements Observer {
 			hero.move(currentRoom);
 			turns++;
 		}
+		for (GameElement e : currentRoom.getElements())
+			if (e instanceof Movable) {
+				Movable m = (Movable) e;
+				m.move(currentRoom);
+			}
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
 		gui.update();
 	}
