@@ -77,7 +77,7 @@ public class EngineExample implements Observer {
 			if (e instanceof Movable) {
 				Movable m = (Movable) e;
 				if (m.getHitpoints() <= 0)
-					currentRoom.getElements().remove(e);
+					it.remove();
 				else
 					m.move(currentRoom);
 			}
