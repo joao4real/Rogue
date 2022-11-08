@@ -8,7 +8,7 @@ import java.util.Scanner;
 import pt.iscte.poo.utils.Point2D;
 
 public class Room {
-	
+
 	private Hero hero;
 	private ArrayList<GameElement> imageList = new ArrayList<>();
 	private ArrayList<GameElement> elementList = new ArrayList<>();
@@ -26,10 +26,10 @@ public class Room {
 		return elementList;
 	}
 
-	public Hero getHero(){
+	public Hero getHero() {
 		return hero;
 	}
-	
+
 	public void addMapAndElements(String name) {
 		File file = new File(name);
 		try {
@@ -56,11 +56,13 @@ public class Room {
 	}
 
 	public boolean isPositionWalkable(Point2D point) {
-        if (!imageList.get(point.getX() + point.getY() * EngineExample.GRID_HEIGHT).isWalkable)
-            return false;
-        for (GameElement e : elementList)
-            if (!e.isWalkable && e.getPosition().equals(point))
-                return false;
-        return true;
-    }
+		if (hero.getPosition().equals(point))
+			return false;
+		if (!imageList.get(point.getX() + point.getY() * EngineExample.GRID_HEIGHT).isWalkable)
+			return false;
+		for (GameElement e : elementList)
+			if (!e.isWalkable && e.getPosition().equals(point))
+				return false;
+		return true;
+	}
 }
