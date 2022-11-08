@@ -68,7 +68,7 @@ public class Hero extends GameElement implements Movable {
 	@Override
 	public int getHitpoints() {
 		return HERO_HP;
-	}
+	} 
 
 	@Override
 	public void setHitpoints(int value) {
