@@ -7,5 +7,11 @@ public interface Movable {
 	public void move(Room room);
 
 	public int getLayer();
+	
+	public void attack(Room room);
+	
+	public int getHitpoints();
+	
+	public void setHitpoints(int value);
 
 }
