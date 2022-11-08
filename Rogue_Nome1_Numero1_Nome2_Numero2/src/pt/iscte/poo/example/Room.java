@@ -10,7 +10,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Room {
 
 	private Hero hero;
-	private ArrayList<GameElement> imageList = new ArrayList<>();
+	private ArrayList<GameElement> mapList = new ArrayList<>();
 	private ArrayList<GameElement> elementList = new ArrayList<>();
 
 	public Room(String name, Hero hero) {
@@ -19,7 +19,7 @@ public class Room {
 	}
 
 	public ArrayList<GameElement> getMap() {
-		return imageList;
+		return mapList;
 	}
 
 	public ArrayList<GameElement> getElements() {
@@ -27,8 +27,11 @@ public class Room {
 	}
 	
 	public GameElement getElement(Point2D point) {
-		return elementList.get(pointToIndex(point));
-	}
+        for (GameElement e : elementList)
+            if (e.getPosition().equals(point))
+                return e;
+        return mapList.get(pointToIndex(point));
+    }
 
 	public Hero getHero() {
 		return hero;
@@ -43,7 +46,7 @@ public class Room {
 				String line = roomScanner.nextLine();
 				if (y < EngineExample.GRID_HEIGHT)
 					for (int x = 0; x != EngineExample.GRID_WIDTH; x++)
-						imageList.add(GameElement.create(line.substring(x, x + 1), new Point2D(x, y)));
+						mapList.add(GameElement.create(line.substring(x, x + 1), new Point2D(x, y)));
 				if (y > EngineExample.GRID_HEIGHT) {
 					Scanner lineScanner = new Scanner(line);
 					lineScanner.useDelimiter(",");
@@ -62,7 +65,7 @@ public class Room {
 	public boolean isPositionWalkable(Point2D point) {
 		if (hero.getPosition().equals(point))
 			return false;
-		if (!imageList.get(pointToIndex(point)).isWalkable)
+		if (!mapList.get(pointToIndex(point)).isWalkable)
 			return false;
 		for (GameElement e : elementList)
 			if (!e.isWalkable && e.getPosition().equals(point))
