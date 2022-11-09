@@ -46,10 +46,12 @@ public class Bat extends GameElement implements Movable {
 		} else
 			vector = Vector2D.movementVector(super.position, room.getHero().getPosition());
 		Point2D newPoint = super.position.plus(vector);
-		if (room.isPositionWalkable(newPoint))
+		GameElement e = room.positionEvaluator(newPoint);
+		if(e instanceof Hero){
+			attack((Movable) e);
+		}
+		if(e.isWalkable)
 			super.position = newPoint;
-//		else if (newPoint.equals(room.getHero().getPosition()))
-//				attack(room);
 	}
 
 	@Override

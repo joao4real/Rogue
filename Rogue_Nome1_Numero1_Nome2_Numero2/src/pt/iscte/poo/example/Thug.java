@@ -40,7 +40,11 @@ public class Thug extends GameElement implements Movable {
 	public void move(Room room) {
 		Vector2D vector = Vector2D.movementVector(super.position, room.getHero().getPosition());
 		Point2D newPoint = super.position.plus(vector);
-		if (room.isPositionWalkable(newPoint))
+		GameElement e = room.positionEvaluator(newPoint);
+		if(e instanceof Hero){
+			attack((Movable) e);
+		}
+		if(e.isWalkable)
 			super.position = newPoint;
 	}
 

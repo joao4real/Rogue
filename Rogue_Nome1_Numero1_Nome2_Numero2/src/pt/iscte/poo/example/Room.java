@@ -25,13 +25,6 @@ public class Room {
 	public ArrayList<GameElement> getElements() {
 		return elementList;
 	}
-	
-	public GameElement getElement(Point2D point) {
-        for (GameElement e : elementList)
-            if (e.getPosition().equals(point))
-                return e;
-        return mapList.get(pointToIndex(point));
-    }
 
 	public Hero getHero() {
 		return hero;
@@ -62,15 +55,13 @@ public class Room {
 		}
 	}
 
-	public boolean isPositionWalkable(Point2D point) {
+	public GameElement positionEvaluator(Point2D point) {
 		if (hero.getPosition().equals(point))
-			return false;
-		if (!mapList.get(pointToIndex(point)).isWalkable)
-			return false;
+			return hero;
 		for (GameElement e : elementList)
 			if (!e.isWalkable && e.getPosition().equals(point))
-				return false;
-		return true;
+				return e;
+		return mapList.get(pointToIndex(point));
 	}
 
 	private int pointToIndex(Point2D point){

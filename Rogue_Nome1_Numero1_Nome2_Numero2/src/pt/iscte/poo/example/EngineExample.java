@@ -42,24 +42,21 @@ public class EngineExample implements Observer {
 		hero = new Hero(new Point2D(1, 1));
 		addRooms();
 		currentRoom = rooms.get(STARTING_MAP);
-		for (GameElement g : currentRoom.getMap()) {
-			gui.addImage(g);
-		}
+		currentRoom.getMap().forEach(g -> gui.addImage(g));
 		addObjects();
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
 		gui.update();
 	}
 
 	private void addRooms() {
-//		for (int i = 0; i < getNumberOfRooms(rooms); i++)
-//			rooms.add(new Room("rooms/room" + i + ".txt"));
-		rooms.add(new Room("rooms/room0.txt", hero));
+		for (int i = 0; i < getNumberOfRooms("rooms"); i++)
+			rooms.add(new Room("rooms/room" + i + ".txt", hero));
+//		rooms.add(new Room("rooms/room1.txt", hero));
 	}
 
 	private void addObjects() {
 		gui.addImage(hero);
-		for (GameElement e : currentRoom.getElements())
-			gui.addImage(e);
+		currentRoom.getElements().forEach(g -> gui.addImage(g));
 	}
 
 	@Override
