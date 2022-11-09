@@ -8,7 +8,7 @@ public class HealingPotion extends GameElement {
 
 	public HealingPotion(Point2D point) {
 		position = point;
-		isWalkable = false;
+		isPickable = true;
 	}
 
 	@Override

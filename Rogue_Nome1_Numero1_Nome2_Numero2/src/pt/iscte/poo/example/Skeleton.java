@@ -12,9 +12,7 @@ public class Skeleton extends GameElement implements Movable {
 
 	public Skeleton(Point2D point) {
 		position = point;
-		isWalkable = false;
 		skeletonHp = MAXIMUM_HP;
-
 	}
 
 	@Override

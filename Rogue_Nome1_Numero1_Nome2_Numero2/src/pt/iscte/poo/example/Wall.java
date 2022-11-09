@@ -8,7 +8,6 @@ public class Wall extends GameElement {
 
 	public Wall(Point2D point) {
 		position = point;
-		isWalkable = false;
 	}
 
 	@Override

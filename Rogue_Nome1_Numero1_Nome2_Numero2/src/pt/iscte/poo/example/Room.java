@@ -37,10 +37,10 @@ public class Room {
 			Scanner roomScanner = new Scanner(file);
 			while (roomScanner.hasNextLine()) {
 				String line = roomScanner.nextLine();
-				if (y < EngineExample.GRID_HEIGHT)
-					for (int x = 0; x != EngineExample.GRID_WIDTH; x++)
+				if (y < GameEngine.GRID_HEIGHT)
+					for (int x = 0; x != GameEngine.GRID_WIDTH; x++)
 						mapList.add(GameElement.create(line.substring(x, x + 1), new Point2D(x, y)));
-				if (y > EngineExample.GRID_HEIGHT) {
+				if (y > GameEngine.GRID_HEIGHT) {
 					Scanner lineScanner = new Scanner(line);
 					lineScanner.useDelimiter(",");
 					elementList.add(GameElement.create(lineScanner.next(),
@@ -63,8 +63,12 @@ public class Room {
 				return e;
 		return mapList.get(pointToIndex(point));
 	}
+	
+	public void removeElement(GameElement e){
+		elementList.remove(e);
+	}
 
 	private int pointToIndex(Point2D point){
-		return point.getX() + point.getY() * EngineExample.GRID_HEIGHT;
+		return point.getX() + point.getY() * GameEngine.GRID_HEIGHT;
 	}
 }

@@ -11,9 +11,7 @@ public class Thug extends GameElement implements Movable {
 
 	public Thug(Point2D point) {
 		position = point;
-		isWalkable = false;
 		thugHp = MAXIMUM_HP;
-
 	}
 
 	@Override

@@ -6,7 +6,7 @@ public class Key extends GameElement{
 	
 	public Key(Point2D point){
 		position = point;
-		isWalkable = false;
+		isPickable = true;
 	}
 
 	@Override

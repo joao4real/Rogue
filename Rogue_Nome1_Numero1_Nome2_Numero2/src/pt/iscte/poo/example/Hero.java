@@ -2,6 +2,7 @@ package pt.iscte.poo.example;
 
 import java.util.ArrayList;
 
+import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
@@ -13,7 +14,7 @@ public class Hero extends GameElement implements Movable {
 	private int heroHp;
 	private int key;
 	private ArrayList<GameElement> inventory = new ArrayList<>();
-	
+
 	public Hero(Point2D point) {
 		position = point;
 		isWalkable = false;
@@ -51,6 +52,11 @@ public class Hero extends GameElement implements Movable {
 		GameElement e = room.positionEvaluator(newPoint);
 		if (e instanceof Movable) {
 			attack((Movable) e);
+		}
+		if (e.isPickable) {
+			inventory.add(e);
+			room.removeElement(e);
+			ImageMatrixGUI.getInstance().removeImage(e);
 		}
 		if (e.isWalkable)
 			super.position = newPoint;

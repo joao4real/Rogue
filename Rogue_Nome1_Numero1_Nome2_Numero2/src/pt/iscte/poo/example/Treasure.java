@@ -6,7 +6,7 @@ public class Treasure extends GameElement {
 
 	public Treasure(Point2D point) {
 		position = point;
-		isWalkable = false;
+		isPickable = true;
 	}
 
 	@Override

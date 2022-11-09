@@ -11,7 +11,7 @@ import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Direction; //added
 
-public class EngineExample implements Observer {
+public class GameEngine implements Observer {
 
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
@@ -19,20 +19,20 @@ public class EngineExample implements Observer {
 	public static final int MINIMUM_HP = 1;
 	
 	private Room currentRoom;
-	private static EngineExample INSTANCE = null;
+	private static GameEngine INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
 	private ArrayList<Room> rooms = new ArrayList<>();
 
 	private Hero hero;
 	private int turns;
 
-	public static EngineExample getInstance() {
+	public static GameEngine getInstance() {
 		if (INSTANCE == null)
-			INSTANCE = new EngineExample();
+			INSTANCE = new GameEngine();
 		return INSTANCE;
 	}
 
-	private EngineExample() {
+	private GameEngine() {
 		gui.registerObserver(this);
 		gui.setSize(GRID_WIDTH, GRID_HEIGHT);
 		gui.go();
@@ -90,4 +90,5 @@ public class EngineExample implements Observer {
 		File[] s = rooms.listFiles();
 		return s.length;
 	}
+
 }

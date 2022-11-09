@@ -13,7 +13,6 @@ public class Bat extends GameElement implements Movable {
 
 	public Bat(Point2D point) {
 		position = point;
-		isWalkable = false;
 		batHp = MAXIMUM_HP;
 	}
 

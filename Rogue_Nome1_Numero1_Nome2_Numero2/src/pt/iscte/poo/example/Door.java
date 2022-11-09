@@ -6,7 +6,6 @@ public class Door extends GameElement{
 	
 	public Door(Point2D point){
 		position = point;
-		isWalkable = false;
 	}
 
 	@Override

@@ -2,11 +2,11 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Sword extends GameElement{
-	
-	public Sword(Point2D point){
-		position = point;		
-		isWalkable = false;
+public class Sword extends GameElement {
+
+	public Sword(Point2D point) {
+		position = point;
+		isPickable = true;
 	}
 
 	@Override

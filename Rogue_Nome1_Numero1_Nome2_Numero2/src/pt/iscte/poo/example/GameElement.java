@@ -7,6 +7,7 @@ public abstract class GameElement implements ImageTile {
 
 	public Point2D position;
 	public boolean isWalkable = false;
+	public boolean isPickable = false;
 
 	public static GameElement create(String code, Point2D point) {
 		switch (code) {
@@ -33,7 +34,7 @@ public abstract class GameElement implements ImageTile {
 		case "#":
 			return new Wall(point);
 		default:
-			return null;
+			throw new IllegalArgumentException();
 		}
 	}
 }
