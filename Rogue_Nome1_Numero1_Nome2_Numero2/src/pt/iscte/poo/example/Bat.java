@@ -31,7 +31,7 @@ public class Bat extends GameElement implements Movable {
 	public Point2D getPosition() {
 		return position;
 	}
-	
+
 	@Override
 	public int getDamage() {
 		return DAMAGE;
@@ -48,15 +48,14 @@ public class Bat extends GameElement implements Movable {
 		Point2D newPoint = super.position.plus(vector);
 		if (room.isPositionWalkable(newPoint))
 			super.position = newPoint;
-		else if (newPoint.equals(room.getHero().getPosition()))
-			attack(room);
+//		else if (newPoint.equals(room.getHero().getPosition()))
+//				attack(room);
 	}
 
-//	@Override
-	public void attack(Room room) {
-		double prob = Math.random();
-		if (prob < 0.5) {
-			room.getHero().setHitpoints(DAMAGE);
+	@Override
+	public void attack(Movable m) {
+		if (Math.random() > 0.5) {
+			m.setHitpoints(DAMAGE);
 			heal();
 		}
 	}
@@ -67,6 +66,7 @@ public class Bat extends GameElement implements Movable {
 
 	public void setHitpoints(int value) {
 		batHp += value;
+		System.out.println(getName() + " hp: " + batHp);
 	}
 
 	public void heal() {

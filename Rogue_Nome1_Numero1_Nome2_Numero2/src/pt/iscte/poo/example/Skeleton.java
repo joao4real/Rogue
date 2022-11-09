@@ -49,18 +49,18 @@ public class Skeleton extends GameElement implements Movable {
 			moveTurn = true;
 	}
 
-//	@Override
-//	public void attack(Room room) {
-//		room.getHero().setHitpoints(DAMAGE);		
-//	}
+	@Override
+	public void attack(Movable m) {
+		m.setHitpoints(DAMAGE);		
+	}
 
 	public int getHitpoints() {
 		return skeletonHp;
 	}
 
 	public void setHitpoints(int value) {
-		System.out.println(skeletonHp);
 		skeletonHp += value;
+		System.out.println(getName() + " hp: " + skeletonHp);
 	}
 
 }

@@ -16,8 +16,9 @@ public class EngineExample implements Observer {
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
 	public static final int STARTING_MAP = 0;
+	public static final int MINIMUM_HP = 1;
+	
 	private Room currentRoom;
-
 	private static EngineExample INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
 	private ArrayList<Room> rooms = new ArrayList<>();
@@ -50,7 +51,7 @@ public class EngineExample implements Observer {
 	}
 
 	private void addRooms() {
-//		for (int i = 0; i < 4; i++)
+//		for (int i = 0; i < getNumberOfRooms(rooms); i++)
 //			rooms.add(new Room("rooms/room" + i + ".txt"));
 		rooms.add(new Room("rooms/room0.txt", hero));
 	}
@@ -76,9 +77,10 @@ public class EngineExample implements Observer {
 			GameElement e = it.next();
 			if (e instanceof Movable) {
 				Movable m = (Movable) e;
-				if (m.getHitpoints() <= 0)
+				if (m.getHitpoints() < MINIMUM_HP) {
+					gui.removeImage(e);
 					it.remove();
-				else
+				} else
 					m.move(currentRoom);
 			}
 		}

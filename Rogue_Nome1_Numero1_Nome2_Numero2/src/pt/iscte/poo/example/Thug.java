@@ -44,12 +44,12 @@ public class Thug extends GameElement implements Movable {
 			super.position = newPoint;
 	}
 
-//	@Override
-//	public void attack(Room room) {
-//		double prob = Math.random();
-//		if(prob < 0.3)
-//		room.getHero().setHitpoints(DAMAGE);
-//	}
+	@Override
+	public void attack(Movable m) {
+		double prob = Math.random();
+		if(prob < 0.3)
+		m.setHitpoints(DAMAGE);
+	}
 
 	public int getHitpoints() {
 		return thugHp;

@@ -10,7 +10,6 @@ public class Hero extends GameElement implements Movable {
 	private static final int DAMAGE = -1;
 	private int heroHp;
 	private int key;
-	private GameElement opponent;
 
 	public Hero(Point2D point) {
 		position = point;
@@ -58,15 +57,10 @@ public class Hero extends GameElement implements Movable {
 
 	}
 
-//	@Override
-//	public void attack(Room room) {
-//		int index = room.getElements().indexOf(opponent);
-//		GameElement e = room.getElements().get(index);
-//		if (e instanceof Movable) {
-//			Movable m = (Movable) e;
-//			m.setHitpoints(DAMAGE);
-//		}
-//	}
+	@Override
+	public void attack(Movable m) {
+		m.setHitpoints(DAMAGE);
+	}
 
 	@Override
 	public int getHitpoints() {
@@ -76,14 +70,7 @@ public class Hero extends GameElement implements Movable {
 	@Override
 	public void setHitpoints(int value) {
 		heroHp += value;
+		System.out.println(getName() + " hp: " + heroHp);
 	}
-
-//	for (GameElement e : room.getElements()) {
-//		if (newPosition.equals(e.position) && e instanceof Movable) {
-//			opponent = e;
-//			attack(room);
-//			return;
-//		}
-//	}
 
 }
