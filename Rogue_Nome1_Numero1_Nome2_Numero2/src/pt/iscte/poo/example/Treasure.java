@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Treasure extends GameElement {
 
 	public Treasure(Point2D point) {
-		position = point;
+		super(point);
 		isPickable = true;
 	}
 

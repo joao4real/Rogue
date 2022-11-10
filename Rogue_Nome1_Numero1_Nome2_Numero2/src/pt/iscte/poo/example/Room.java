@@ -25,6 +25,13 @@ public class Room {
 	public ArrayList<GameElement> getElements() {
 		return elementList;
 	}
+	
+	public GameElement getElement(Point2D point){
+		for(GameElement e : elementList)
+			if(e.getPosition().equals(point))
+				return e;
+		return mapList.get(pointToIndex(point));
+	}
 
 	public Hero getHero() {
 		return hero;

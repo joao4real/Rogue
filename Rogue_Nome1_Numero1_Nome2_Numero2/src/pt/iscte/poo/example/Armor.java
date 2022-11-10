@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Armor extends GameElement{
 
 	public Armor(Point2D point) {
-		position = point;
+		super(point);
 		isPickable = true;
 	}
 

@@ -7,7 +7,7 @@ public class HealingPotion extends GameElement {
 	private static final int HEAL = 5;
 
 	public HealingPotion(Point2D point) {
-		position = point;
+		super(point);
 		isPickable = true;
 	}
 

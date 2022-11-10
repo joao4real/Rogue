@@ -4,10 +4,8 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Wall extends GameElement {
 
-	private Point2D position;
-
 	public Wall(Point2D point) {
-		position = point;
+		super(point);
 	}
 
 	@Override

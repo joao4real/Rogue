@@ -15,10 +15,10 @@ public class GameEngine implements Observer {
 
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
-	public static final int STARTING_MAP = 0;
+	public static final int STARTING_MAP = 3;
 	public static final int MINIMUM_HP = 1;
 	
-	private Room currentRoom;
+	public Room currentRoom;
 	private static GameEngine INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
 	private ArrayList<Room> rooms = new ArrayList<>();
@@ -42,6 +42,7 @@ public class GameEngine implements Observer {
 		hero = new Hero(new Point2D(1, 1));
 		addRooms();
 		currentRoom = rooms.get(STARTING_MAP);
+		System.out.println(currentRoom.getElements());
 		currentRoom.getMap().forEach(g -> gui.addImage(g));
 		addObjects();
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
@@ -51,7 +52,7 @@ public class GameEngine implements Observer {
 	private void addRooms() {
 		for (int i = 0; i < getNumberOfRooms("rooms"); i++)
 			rooms.add(new Room("rooms/room" + i + ".txt", hero));
-//		rooms.add(new Room("rooms/room1.txt", hero));
+		//rooms.add(new Room("rooms/room2.txt", hero));
 	}
 
 	private void addObjects() {
@@ -65,22 +66,22 @@ public class GameEngine implements Observer {
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
 		if (Direction.isDirection(key)) {
-			hero.setKey(key);
-			hero.move(currentRoom);
+			hero.move(key);
 			turns++;
-		}
-		Iterator<GameElement> it = currentRoom.getElements().iterator();
-		while (it.hasNext()) {
-			GameElement e = it.next();
-			if (e instanceof Movable) {
-				Movable m = (Movable) e;
-				if (m.getHitpoints() < MINIMUM_HP) {
-					gui.removeImage(e);
-					it.remove();
-				} else
-					m.move(currentRoom);
+			Iterator<GameElement> it = currentRoom.getElements().iterator();
+			while (it.hasNext()) {
+				GameElement e = it.next();
+				if (e instanceof Movable) {
+					Movable m = (Movable) e;
+					if (m.getHitpoints() < MINIMUM_HP) {
+						gui.removeImage(e);
+						it.remove();
+					} else
+						m.move(key);
+				}
 			}
 		}
+		
 		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
 		gui.update();
 	}
@@ -91,4 +92,13 @@ public class GameEngine implements Observer {
 		return s.length;
 	}
 
+	public void addElement(GameElement e){
+		currentRoom.getElements().add(e);
+		gui.addImage(e);
+	}
+	
+	public void removeElement(GameElement e){
+		currentRoom.getElements().remove(e);
+		gui.removeImage(e);
+	}
 }

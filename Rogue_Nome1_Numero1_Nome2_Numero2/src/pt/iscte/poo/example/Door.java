@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Door extends GameElement{
 	
 	public Door(Point2D point){
-		position = point;
+		super(point);
 	}
 
 	@Override

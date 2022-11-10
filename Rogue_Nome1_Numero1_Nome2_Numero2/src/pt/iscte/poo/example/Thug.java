@@ -3,15 +3,13 @@ package pt.iscte.poo.example;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Thug extends GameElement implements Movable {
+public class Thug extends Movable {
 
 	private static final int DAMAGE = -3;
 	private static final int MAXIMUM_HP = 10;
-	private int thugHp;
 
 	public Thug(Point2D point) {
-		position = point;
-		thugHp = MAXIMUM_HP;
+		super(point, MAXIMUM_HP);
 	}
 
 	@Override
@@ -21,25 +19,21 @@ public class Thug extends GameElement implements Movable {
 
 	@Override
 	public Point2D getPosition() {
-		return position;
+		return super.position;
 	}
 
 	@Override
 	public int getLayer() {
 		return 0;
 	}
-	
-	@Override
-	public int getDamage() {
-		return DAMAGE;
-	}
 
 	@Override
-	public void move(Room room) {
-		Vector2D vector = Vector2D.movementVector(super.position, room.getHero().getPosition());
+	public void move(int key) {
+		Room currentRoom = GameEngine.getInstance().currentRoom;
+		Vector2D vector = Vector2D.movementVector(super.position,currentRoom.getHero().getPosition());
 		Point2D newPoint = super.position.plus(vector);
-		GameElement e = room.positionEvaluator(newPoint);
-		if(e instanceof Hero){
+		GameElement e = GameEngine.getInstance().currentRoom.positionEvaluator(newPoint);
+		if(e instanceof Movable){
 			attack((Movable) e);
 		}
 		if(e.isWalkable)
@@ -54,10 +48,7 @@ public class Thug extends GameElement implements Movable {
 	}
 
 	public int getHitpoints() {
-		return thugHp;
+		return super.hitpoints;
 	}
 
-	public void setHitpoints(int value) {
-		thugHp += value;
-	}
 }

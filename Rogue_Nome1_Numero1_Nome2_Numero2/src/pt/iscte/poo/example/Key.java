@@ -5,7 +5,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Key extends GameElement{
 	
 	public Key(Point2D point){
-		position = point;
+		super(point);
 		isPickable = true;
 	}
 

@@ -1,18 +1,15 @@
 package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.utils.Vector2D;
 
-public class Skeleton extends GameElement implements Movable {
+public class Skeleton extends Movable {
 
 	private static final int DAMAGE = -1;
 	private static final int MAXIMUM_HP = 5;
-	private int skeletonHp;
 	private boolean moveTurn = true;
 
 	public Skeleton(Point2D point) {
-		position = point;
-		skeletonHp = MAXIMUM_HP;
+		super(point, MAXIMUM_HP);
 	}
 
 	@Override
@@ -22,30 +19,18 @@ public class Skeleton extends GameElement implements Movable {
 
 	@Override
 	public Point2D getPosition() {
-		return position;
+		return super.position;
 	}
 
 	@Override
 	public int getLayer() {
 		return 0;
 	}
-	
-	@Override
-	public int getDamage() {
-		return DAMAGE;
-	}
 
 	@Override
-	public void move(Room room) {
+	public void move(int key) {
 		if (moveTurn) {
-			Vector2D vector = Vector2D.movementVector(super.position, room.getHero().getPosition());
-			Point2D newPoint = super.position.plus(vector);
-			GameElement e = room.positionEvaluator(newPoint);
-			if(e instanceof Hero){
-				attack((Movable) e);
-			}
-			if(e.isWalkable)
-				super.position = newPoint;
+			super.move(key);
 			moveTurn = false;
 		} else
 			moveTurn = true;
@@ -57,12 +42,7 @@ public class Skeleton extends GameElement implements Movable {
 	}
 
 	public int getHitpoints() {
-		return skeletonHp;
-	}
-
-	public void setHitpoints(int value) {
-		skeletonHp += value;
-		System.out.println(getName() + " hp: " + skeletonHp);
+		return super.hitpoints;
 	}
 
 }
