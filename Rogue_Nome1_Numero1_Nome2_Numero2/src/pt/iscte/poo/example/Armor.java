@@ -2,25 +2,17 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Armor extends GameElement{
+public class Armor extends GameElement implements Pickable {
 
-	public Armor(Point2D point) {
-		super(point);
-		isPickable = true;
-	}
+    private static final double DODGE_CHANCE = 0.5;
 
-	@Override
-	public String getName() {
-		return "Armor";
-	}
-	
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
+    public Armor(Point2D point) {
+        super(point, "Armor");
+    }
 
-	@Override
-	public int getLayer() {
-		return 0;
-	}
+    @Override
+    public void pick() {
+        GameEngine.getHero().setDodgeChance(DODGE_CHANCE);
+    }
+
 }

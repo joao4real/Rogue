@@ -2,24 +2,21 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Door extends GameElement{
-	
-	public Door(Point2D point){
-		super(point);
-	}
+public class Door extends GameElement {
+    
+    private boolean isOpen = false;
 
-	@Override
-	public String getName() {
-		return "DoorClosed";
-	}
-	
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
+    public Door(Point2D point) {
+        super(point, "DoorClosed");
+    }
 
-	@Override
-	public int getLayer() {
-		return 0;
-	}
+    @Override
+    public String getName() {
+        return isOpen ? "DoorOpen" : super.getName();
+    }
+
+    public void openDoor(){
+        isWalkable = true;
+        isOpen = true;
+    }
 }

@@ -2,25 +2,21 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Key extends GameElement{
-	
-	public Key(Point2D point){
-		super(point);
-		isPickable = true;
-	}
+public class Key extends GameElement implements Pickable {
 
-	@Override
-	public String getName() {
-		return "Key";
-	}
+    private String code;
 
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
+    public Key(Point2D point, String code) {
+        super(point, "Key");
+        this.code = code;
+    }
 
-	@Override
-	public int getLayer() {
-		return 0;
-	}
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public void pick() {
+    }
+
 }

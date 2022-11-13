@@ -9,45 +9,52 @@ import pt.iscte.poo.utils.Vector2D;
 
 public class Hero extends Movable {
 
-	public static final int MAXIMUM_HP = 10;
-	private static final int DAMAGE = -1;
-	private ArrayList<GameElement> inventory = new ArrayList<>();
+    private static final int MAXIMUM_HP = 10;
+    private static final int DAMAGE = -1;
 
-	public Hero(Point2D point) {
-		super(point, MAXIMUM_HP);
-	}
+    private double dodgeChance = 0;
 
-	@Override
-	public String getName() {
-		return "Hero";
-	}
+    private ArrayList<GameElement> inventory = new ArrayList<>();
 
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
+    public Hero(Point2D point) {
+        super(point, "Hero", MAXIMUM_HP, DAMAGE);
+    }
 
-	@Override
-	public int getLayer() {
-		return 0;
-	}
+    public void setDodgeChance(double chance) {
+        dodgeChance = chance;
+    }
 
-	public void move(int key) {
-		Direction direction = Direction.directionFor(key);
-		Vector2D vector = direction.asVector();
-		Point2D newPoint = super.position.plus(vector);
-		GameElement e = GameEngine.getInstance().currentRoom.getElement(newPoint);	
-		if (e.isPickable) {
-			inventory.add(e);
-			GameEngine.getInstance().currentRoom.removeElement(e);
-			ImageMatrixGUI.getInstance().removeImage(e);
-		}
-		super.move(key);
-	}
+    @Override
+    public void move(int key) {
+        Direction direction = Direction.directionFor(key);
+        Vector2D vector = direction.asVector();
+        Point2D newPoint = super.position.plus(vector);
+        GameElement e = GameEngine.getInstance().currentRoom.getElement(newPoint);
+        if (e instanceof Pickable)
+            pick(e);
+        super.move(key);
+    }
 
-	@Override
-	public void attack(Movable m) {
-		m.setHitpoints(DAMAGE);
-	}
+    @Override
+    public void attack(Movable m) {
+        m.setHitpoints(super.damage);
+    }
 
+    public void pick(GameElement e) {
+        inventory.add(e);
+        GameEngine.getInstance().currentRoom.removeElement(e);
+        ImageMatrixGUI.getInstance().removeImage(e);
+        ((Pickable) e).pick();
+    }
+
+    @Override
+    public void setHitpoints(int value) {
+        if (Math.random() < dodgeChance)
+            super.hitpoints += value;
+        System.out.println(getName() + super.hitpoints);
+    }
+
+    public void scaleDamage(int value) {
+        super.damage *= value;
+    }
 }

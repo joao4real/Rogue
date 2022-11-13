@@ -2,25 +2,17 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Sword extends GameElement {
+public class Sword extends GameElement implements Pickable {
+    
+    private final static int DAMAGE_AMP = 2;
 
-	public Sword(Point2D point) {
-		super(point);		
-		isPickable = true;
-	}
+    public Sword(Point2D point) {
+        super(point, "Sword");
+    }
 
-	@Override
-	public String getName() {
-		return "Sword";
-	}
+    @Override
+    public void pick() {
+        GameEngine.getHero().scaleDamage(DAMAGE_AMP);
+    }
 
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
-
-	@Override
-	public int getLayer() {
-		return 0;
-	}
 }
