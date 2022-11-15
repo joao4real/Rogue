@@ -15,7 +15,7 @@ public class GameEngine implements Observer {
 
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
-    public static final int STARTING_MAP = 1;
+    public static final int STARTING_MAP = 0;
     public static final int MINIMUM_HP = 1;
     
     public Room currentRoom;
@@ -49,9 +49,9 @@ public class GameEngine implements Observer {
     }
 
     private void addRooms() {
-        for (int i = 0; i < getNumberOfRooms("rooms"); i++)
-            rooms.add(new Room("rooms/room" + i + ".txt", hero));
-//        rooms.add(new Room("rooms/room1.txt", hero));
+//        for (int i = 0; i < getNumberOfRooms("rooms"); i++)
+//            rooms.add(new Room("rooms/room" + i + ".txt", hero));
+        rooms.add(new Room("rooms/room0.txt", hero));
     }
 
     private void addObjects() {

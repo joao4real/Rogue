@@ -1,5 +1,7 @@
 package pt.iscte.poo.example;
 
+import java.util.Scanner;
+
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
@@ -31,20 +33,20 @@ public abstract class GameElement implements ImageTile {
         return DEFAULT_LAYER;
     }
 
-    public static GameElement create(String code, Point2D point) {
+    public static GameElement create(String code, Point2D point, Scanner info) {
         switch (code) {
         case "Armor":
             return new Armor(point);
         case "Bat":
             return new Bat(point);
         case "Door":
-            return new Door(point);
+            return new Door(point, info);
         case " ":
             return new Floor(point);
         case "HealingPotion":
             return new HealingPotion(point);
         case "Key":
-            return new Key(point, "");
+            return new Key(point, info);
         case "Skeleton":
             return new Skeleton(point);
         case "Sword":
