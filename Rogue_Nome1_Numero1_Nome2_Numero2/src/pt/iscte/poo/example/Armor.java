@@ -12,7 +12,7 @@ public class Armor extends GameElement implements Pickable {
 
     @Override
     public void pick() {
-        GameEngine.getHero().setDodgeChance(DODGE_CHANCE);
+        GameEngine.getInstance().getHero().setDodgeChance(DODGE_CHANCE);
     }
 
 }

@@ -12,7 +12,7 @@ public class Sword extends GameElement implements Pickable {
 
     @Override
     public void pick() {
-        GameEngine.getHero().scaleDamage(DAMAGE_AMP);
+        GameEngine.getInstance().getHero().scaleDamage(DAMAGE_AMP);
     }
 
 }

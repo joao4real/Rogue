@@ -28,7 +28,7 @@ public abstract class Movable extends GameElement {
         Direction direction = Direction.directionFor(key);
         Vector2D vector = direction.asVector();
         Point2D newPoint = super.position.plus(vector);
-        GameElement e = GameEngine.getInstance().currentRoom.positionEvaluator(newPoint);
+        GameElement e = GameEngine.getInstance().getRoom().positionEvaluator(newPoint);
         if (e instanceof Movable) {
             attack((Movable) e);
         }

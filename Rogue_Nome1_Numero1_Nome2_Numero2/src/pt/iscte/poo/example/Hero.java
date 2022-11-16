@@ -29,36 +29,34 @@ public class Hero extends Movable {
 		Direction direction = Direction.directionFor(key);
 		Vector2D vector = direction.asVector();
 		Point2D newPoint = super.position.plus(vector);
-		GameElement e = GameEngine.getInstance().currentRoom.getElement(newPoint);
-		if (e instanceof Pickable)
+		GameElement e = GameEngine.getInstance().getRoom().getElement(newPoint);
+		if (e instanceof Pickable) {
 			pick(e);
-		super.move(key);
+			super.move(key);
+		}
 		if (e instanceof Door) {
 			Door d = (Door) e;
-//			if (d.isOpen()) {
-//				GameEngine.getHero().setPosition(d.getHeroPoint());
-//				for (Room r : GameEngine.getInstance().rooms)
-//					if (r.getName().equals(d.getRoomName()))
-//						GameEngine.getInstance().currentRoom = r;
-//			} else {
-//				boolean tmp = false;
-//				for (Room r : GameEngine.getInstance().rooms)
-//					if (r.getName().equals(d.getRoomName()))
-//						tmp = true;
-//				if (!tmp)
-//					GameEngine.getInstance().rooms.add(new Room(d.getRoomName(), GameEngine.getHero()));
+			if (!d.isOpen()) {
 				for (GameElement i : inventory) {
 					if (i instanceof Key) {
 						Key k = (Key) i;
-						if (k.getCode().equals(d.getKeyCode()))
-							d.open();
-						break;
-					}
+						if (k.getCode().equals(d.getKeyCode())) {
+							GameEngine.getInstance().addRoom(d.getRoomName());
+							System.out.println(d.getRoomName());
 
+							d.open();
+							return;
+						}
+					}
 				}
+			} else {
+				GameEngine.getInstance().swapRoom(d.getName(), d.getHeroPoint());
+				return;
 			}
 		}
-	
+		super.move(key);
+	}
+
 	@Override
 	public void attack(Movable m) {
 		m.setHitpoints(super.damage);
@@ -66,7 +64,7 @@ public class Hero extends Movable {
 
 	public void pick(GameElement e) {
 		inventory.add(e);
-		GameEngine.getInstance().currentRoom.removeElement(e);
+		GameEngine.getInstance().getRoom().removeElement(e);
 		ImageMatrixGUI.getInstance().removeImage(e);
 		((Pickable) e).pick();
 	}
