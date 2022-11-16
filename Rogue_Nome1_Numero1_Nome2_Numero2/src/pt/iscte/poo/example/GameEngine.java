@@ -1,8 +1,6 @@
 package pt.iscte.poo.example;
 
-import java.io.File;
 import java.util.ArrayList;
-
 import java.util.Iterator;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
@@ -15,8 +13,8 @@ public class GameEngine implements Observer {
 
     public static final int GRID_HEIGHT = 10;
     public static final int GRID_WIDTH = 10;
-    public static final int STARTING_MAP = 0;
     public static final int MINIMUM_HP = 1;
+    public static final String STARTING_MAP = "room0";
     
     public Room currentRoom;
     private static GameEngine INSTANCE = null;
@@ -40,18 +38,12 @@ public class GameEngine implements Observer {
 
     public void start() {
         hero = new Hero(new Point2D(1, 1));
-        addRooms();
-        currentRoom = rooms.get(STARTING_MAP);
+        rooms.add(new Room(STARTING_MAP, hero));
+        currentRoom = rooms.get(0);
         currentRoom.getMap().forEach(g -> gui.addImage(g));
         addObjects();
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
-    }
-
-    private void addRooms() {
-//        for (int i = 0; i < getNumberOfRooms("rooms"); i++)
-//            rooms.add(new Room("rooms/room" + i + ".txt", hero));
-        rooms.add(new Room("rooms/room0.txt", hero));
     }
 
     private void addObjects() {
@@ -82,12 +74,6 @@ public class GameEngine implements Observer {
         
         gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
         gui.update();
-    }
-
-    public int getNumberOfRooms(String name) {
-        File rooms = new File(name);
-        File[] s = rooms.listFiles();
-        return s.length;
     }
 
     /*public void addElement(GameElement e){

@@ -40,8 +40,8 @@ public class Hero extends Movable {
 					Key k = (Key) i;
 					if (k.getCode().equals(d.getKeyCode()))
 						d.open();
+					break;
 				}
-				break;
 			}
 		}
 	}
@@ -60,7 +60,7 @@ public class Hero extends Movable {
 
 	@Override
 	public void setHitpoints(int value) {
-		if (Math.random() < dodgeChance)
+		if (Math.random() > dodgeChance)
 			super.hitpoints += value;
 		System.out.println(getName() + super.hitpoints);
 	}

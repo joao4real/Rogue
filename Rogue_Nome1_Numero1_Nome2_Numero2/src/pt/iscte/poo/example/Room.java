@@ -9,12 +9,14 @@ import pt.iscte.poo.utils.Point2D;
 
 public class Room {
 
+	private String name;
 	private Hero hero;
 	private ArrayList<GameElement> mapList = new ArrayList<>();
 	private ArrayList<GameElement> elementList = new ArrayList<>();
 
 	public Room(String name, Hero hero) {
 		this.hero = hero;
+		this.name = name;
 		addMapAndElements(name);
 	}
 
@@ -37,8 +39,12 @@ public class Room {
 		return hero;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void addMapAndElements(String name) {
-		File file = new File(name);
+		File file = new File("rooms/" + name + ".txt");
 		try {
 			int y = 0;
 			Scanner roomScanner = new Scanner(file);
