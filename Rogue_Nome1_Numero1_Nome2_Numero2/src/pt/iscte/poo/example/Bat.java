@@ -16,11 +16,6 @@ public class Bat extends Movable {
     }
 
     @Override
-    public String getName() {
-        return "Bat";
-    }
-
-    @Override
     public void move(int key) {
         if (Math.random() > 0.5)
             key = keyFor(Direction.random());

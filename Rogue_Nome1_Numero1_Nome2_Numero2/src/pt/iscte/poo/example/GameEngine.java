@@ -19,7 +19,7 @@ public class GameEngine implements Observer {
     public Room currentRoom;
     private static GameEngine INSTANCE = null;
     public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
-    private ArrayList<Room> rooms = new ArrayList<>();
+    public ArrayList<Room> rooms = new ArrayList<>();
 
     private Hero hero;
     private int turns;

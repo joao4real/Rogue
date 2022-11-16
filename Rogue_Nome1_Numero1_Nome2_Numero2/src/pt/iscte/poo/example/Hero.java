@@ -35,17 +35,30 @@ public class Hero extends Movable {
 		super.move(key);
 		if (e instanceof Door) {
 			Door d = (Door) e;
-			for (GameElement i : inventory) {
-				if (i instanceof Key) {
-					Key k = (Key) i;
-					if (k.getCode().equals(d.getKeyCode()))
-						d.open();
-					break;
+//			if (d.isOpen()) {
+//				GameEngine.getHero().setPosition(d.getHeroPoint());
+//				for (Room r : GameEngine.getInstance().rooms)
+//					if (r.getName().equals(d.getRoomName()))
+//						GameEngine.getInstance().currentRoom = r;
+//			} else {
+//				boolean tmp = false;
+//				for (Room r : GameEngine.getInstance().rooms)
+//					if (r.getName().equals(d.getRoomName()))
+//						tmp = true;
+//				if (!tmp)
+//					GameEngine.getInstance().rooms.add(new Room(d.getRoomName(), GameEngine.getHero()));
+				for (GameElement i : inventory) {
+					if (i instanceof Key) {
+						Key k = (Key) i;
+						if (k.getCode().equals(d.getKeyCode()))
+							d.open();
+						break;
+					}
+
 				}
 			}
 		}
-	}
-
+	
 	@Override
 	public void attack(Movable m) {
 		m.setHitpoints(super.damage);
@@ -63,6 +76,10 @@ public class Hero extends Movable {
 		if (Math.random() > dodgeChance)
 			super.hitpoints += value;
 		System.out.println(getName() + super.hitpoints);
+	}
+
+	public void setPosition(Point2D point) {
+		super.position = point;
 	}
 
 	public void scaleDamage(int value) {
