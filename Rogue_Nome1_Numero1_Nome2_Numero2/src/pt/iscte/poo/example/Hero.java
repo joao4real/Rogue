@@ -43,14 +43,13 @@ public class Hero extends Movable {
 						if (k.getCode().equals(d.getKeyCode())) {
 							GameEngine.getInstance().addRoom(d.getRoomName());
 							System.out.println(d.getRoomName());
-
 							d.open();
 							return;
 						}
 					}
 				}
 			} else {
-				GameEngine.getInstance().swapRoom(d.getName(), d.getHeroPoint());
+				GameEngine.getInstance().swapRoom(d.getRoomName(), d.getHeroPoint());
 				return;
 			}
 		}

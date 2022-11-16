@@ -90,23 +90,21 @@ public class GameEngine implements Observer {
 	}
 
 	public void swapRoom(String name, Point2D point) {
-		currentRoom = name;
 		gui.clearImages();
+
+		currentRoom = name;
 		
-		gui.addImage(hero);
-
-		getRoom().getMap().forEach(e -> System.out.println(e.getName()));
 		getRoom().getMap().forEach(e -> gui.addImage(e));
-		System.out.println("aki");
 
-		getRoom().getElements().forEach(e -> gui.addImage(e));
+		addObjects();
 
 		hero.setPosition(point);
 	}
-	
-	public Room getRoom(){
-		for(Room r : rooms)
-			if(r.getName().equals(currentRoom)) return r;
+
+	public Room getRoom() {
+		for (Room r : rooms)
+			if (r.getName().equals(currentRoom))
+				return r;
 		throw new IllegalArgumentException();
 	}
 }
