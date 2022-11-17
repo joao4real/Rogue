@@ -18,8 +18,6 @@ public class Room {
 		this.hero = hero;
 		this.name = name;
 		addMapAndElements(name);
-		mapList.forEach(e -> System.out.println(e.getName()));
-		elementList.forEach(e -> System.out.println(e.getName()));
 	}
 
 	public ArrayList<GameElement> getMap() {

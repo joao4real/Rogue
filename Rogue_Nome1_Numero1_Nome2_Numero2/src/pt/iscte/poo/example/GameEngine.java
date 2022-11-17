@@ -51,8 +51,8 @@ public class GameEngine implements Observer {
 	}
 
 	private void addObjects() {
-		gui.addImage(hero);
 		getRoom().getElements().forEach(g -> gui.addImage(g));
+		gui.addImage(hero);
 	}
 
 	@Override
@@ -91,13 +91,9 @@ public class GameEngine implements Observer {
 
 	public void swapRoom(String name, Point2D point) {
 		gui.clearImages();
-
-		currentRoom = name;
-		
+		currentRoom = name;		
 		getRoom().getMap().forEach(e -> gui.addImage(e));
-
 		addObjects();
-
 		hero.setPosition(point);
 	}
 
