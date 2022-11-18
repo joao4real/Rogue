@@ -1,5 +1,6 @@
 package pt.iscte.poo.example;
 
+import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 public class Thug extends Movable {
@@ -11,12 +12,11 @@ public class Thug extends Movable {
     public Thug(Point2D point) {
         super(point, "Thug", MAXIMUM_HP, DAMAGE);
     }
-
-//    @Override
-//    public void move(Room room) {
-//        Vector2D vector = Vector2D.movementVector(super.position, room.getHero().getPosition());
-//        super.move(room, super.position.plus(vector));
-//    }
+    
+    @Override
+    public void move(Direction d){
+    	super.move(Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition())));
+    }
 
     @Override
     public void attack(Movable m) {

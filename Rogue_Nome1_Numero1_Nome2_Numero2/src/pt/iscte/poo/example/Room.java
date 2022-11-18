@@ -29,10 +29,8 @@ public class Room {
 	}
 
 	public GameElement getElement(Point2D point) {
-		for (GameElement e : elementList)
-			if (e.getPosition().equals(point))
-				return e;
-		return mapList.get(pointToIndex(point));
+		GameElement e = GameEngine.genericSearch(elementList, g -> g.getPosition().equals(point));
+		return e != null ? e : mapList.get(pointToIndex(point));
 	}
 
 	public Hero getHero() {

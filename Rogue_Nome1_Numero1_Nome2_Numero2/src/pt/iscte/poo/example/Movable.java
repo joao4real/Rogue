@@ -24,11 +24,10 @@ public abstract class Movable extends GameElement {
         System.out.println(getName() + hitpoints);
     }
 
-    public void move(int key) {
-        Direction direction = Direction.directionFor(key);
-        Vector2D vector = direction.asVector();
+    public void move(Direction d) {
+        Vector2D vector = d.asVector();
         Point2D newPoint = super.position.plus(vector);
-        GameElement e = GameEngine.getInstance().getRoom().positionEvaluator(newPoint);
+        GameElement e = GameEngine.getInstance().getCurrentRoom().positionEvaluator(newPoint);
         if (e instanceof Movable) {
             attack((Movable) e);
         }

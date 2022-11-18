@@ -23,7 +23,7 @@ public class Door extends GameElement {
 
 	@Override
 	public String getName() {
-		return isOpen() ? "DoorOpen" : super.getName();
+		return isOpen() ? "DoorOpen" : "DoorClosed";
 	}
 
 	public String getRoomName() {

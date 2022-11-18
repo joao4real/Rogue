@@ -1,7 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.awt.event.KeyEvent;
-
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -16,10 +14,10 @@ public class Bat extends Movable {
     }
 
     @Override
-    public void move(int key) {
+    public void move(Direction d) {
         if (Math.random() > 0.5)
-            key = keyFor(Direction.random());
-        super.move(key);
+            d = (Direction.random());
+        super.move(d);
     }
 
     @Override
@@ -36,18 +34,4 @@ public class Bat extends Movable {
         System.out.println(getName() + super.hitpoints);
     }
 
-    public static int keyFor(Direction d) {
-        switch (d) {
-        case DOWN:
-            return KeyEvent.VK_DOWN;
-        case UP:
-            return KeyEvent.VK_UP;
-        case LEFT:
-            return KeyEvent.VK_LEFT;
-        case RIGHT:
-            return KeyEvent.VK_RIGHT;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
 }

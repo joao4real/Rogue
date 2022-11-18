@@ -25,34 +25,32 @@ public class Hero extends Movable {
 	}
 
 	@Override
-	public void move(int key) {
-		Direction direction = Direction.directionFor(key);
-		Vector2D vector = direction.asVector();
+	public void move(Direction d) {
+		Vector2D vector = d.asVector();
 		Point2D newPoint = super.position.plus(vector);
-		GameElement e = GameEngine.getInstance().getRoom().getElement(newPoint);
+		GameElement e = GameEngine.getInstance().getCurrentRoom().getElement(newPoint);
 		if (e instanceof Pickable) {
 			pick(e);
-			super.move(key);
+			super.move(d);
 		}
 		if (e instanceof Door) {
-			Door d = (Door) e;
-			if (!d.isOpen()) {
+			Door p = (Door) e;
+			if (!p.isOpen()) {
 				for (GameElement i : inventory) {
 					if (i instanceof Key) {
 						Key k = (Key) i;
-						if (k.getCode().equals(d.getKeyCode())) {
-							d.open();
+						if (k.getCode().equals(p.getKeyCode())) {
+							p.open();
 							return;
 						}
 					}
 				}
 			} else {
-				GameEngine.getInstance().addRoom(d.getRoomName());
-				GameEngine.getInstance().swapRoom(d.getRoomName(), d.getHeroPoint());
+				GameEngine.getInstance().manageRoom(p.getRoomName(), p.getHeroPoint());
 				return;
 			}
 		}
-		super.move(key);
+		super.move(d);
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class Hero extends Movable {
 
 	public void pick(GameElement e) {
 		inventory.add(e);
-		GameEngine.getInstance().getRoom().removeElement(e);
+		GameEngine.getInstance().getCurrentRoom().removeElement(e);
 		ImageMatrixGUI.getInstance().removeImage(e);
 		((Pickable) e).pick();
 	}
