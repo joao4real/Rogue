@@ -68,9 +68,10 @@ public class Hero extends Movable {
 
 	@Override
 	public void setHitpoints(int value) {
-		if (Math.random() > dodgeChance)
-			super.hitpoints += value;
+		if (Math.random() > dodgeChance) {
 			updateHealth(value);
+			super.hitpoints += value;
+		}
 		System.out.println(getName() + super.hitpoints);
 	}
 
@@ -86,25 +87,25 @@ public class Hero extends Movable {
 		for (int i = 0; i < Hero.MAXIMUM_HP / 2; i++)
 			GameEngine.getInstance().gui.addImage(new Green(new Point2D(i, GameEngine.GRID_HEIGHT)));
 	}
-	
+
 	public void updateHealth(int value) {
-		  if(value == 0)
-		    return;
-		  int x = super.hitpoints;
-		   if(x % 2 == 1){
-		     x = x/2;
-		     value--;
-		     GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-		   }
-		   x = x/2-1;
-		   while(value <= 0) {
-		     if(value % 2 == 0) {
-		    	 GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-		       value += 2;
-		    } else {
-		    	GameEngine.getInstance().gui.addImage(new GreenRed(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-		       value++;
-		    }
-		  }
+		if (value == 0)
+			return;
+		int x = super.hitpoints;
+		if (x % 2 != 0) {
+			x = x / 2;
+			value++;
+			GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
+		} else
+			x = x / 2 - 1;
+		while (value < 0) {
+			if (value % 2 == 0) {
+				GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
+				value += 2;
+			} else {
+				GameEngine.getInstance().gui.addImage(new GreenRed(new Point2D(x--, GameEngine.GRID_HEIGHT)));
+				value++;
+			}
 		}
+	}
 }
