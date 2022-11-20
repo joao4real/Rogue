@@ -108,6 +108,7 @@ public class GameEngine implements Observer {
 		getCurrentRoom().getMap().forEach(e -> gui.addImage(e));
 		addObjects();
 		hero.setPosition(point);
+		hero.updateHealthBar(hero.getHitpoints());
 	}
 
 	public void manageRoom(String name, Point2D point) {

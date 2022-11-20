@@ -18,7 +18,7 @@ public class Hero extends Movable {
 
 	public Hero(Point2D point) {
 		super(point, "Hero", MAXIMUM_HP, DAMAGE);
-		setHealth();
+		updateHealthBar(MAXIMUM_HP);
 	}
 
 	public void setDodgeChance(double chance) {
@@ -26,32 +26,27 @@ public class Hero extends Movable {
 	}
 
 	@Override
-	public void move(Direction d) {
-		Vector2D vector = d.asVector();
+	public void move(Direction dir) {
+		Vector2D vector = dir.asVector();
 		Point2D newPoint = super.position.plus(vector);
 		GameElement e = GameEngine.getInstance().getCurrentRoom().getElement(newPoint);
 		if (e instanceof Pickable) {
 			pick(e);
-			super.move(d);
 		}
+		super.move(dir);
 		if (e instanceof Door) {
-			Door p = (Door) e;
-			if (!p.isOpen()) {
+			Door d = (Door) e;
+			if (d.isOpen())
+				GameEngine.getInstance().manageRoom(d.getRoomName(), d.getHeroPoint());
+			else
 				for (GameElement i : inventory) {
 					if (i instanceof Key) {
 						Key k = (Key) i;
-						if (k.getCode().equals(p.getKeyCode())) {
-							p.open();
-							return;
-						}
+						if (k.getCode().equals(d.getKeyCode()))
+							d.open();
 					}
 				}
-			} else {
-				GameEngine.getInstance().manageRoom(p.getRoomName(), p.getHeroPoint());
-				return;
-			}
 		}
-		super.move(d);
 	}
 
 	@Override
@@ -68,10 +63,9 @@ public class Hero extends Movable {
 
 	@Override
 	public void setHitpoints(int value) {
-		if (Math.random() > dodgeChance) {
-			updateHealth(value);
+		if (Math.random() > dodgeChance)
 			super.hitpoints += value;
-		}
+		updateHealthBar(super.hitpoints);
 		System.out.println(getName() + super.hitpoints);
 	}
 
@@ -83,29 +77,16 @@ public class Hero extends Movable {
 		super.damage *= value;
 	}
 
-	public void setHealth() {
-		for (int i = 0; i < Hero.MAXIMUM_HP / 2; i++)
-			GameEngine.getInstance().gui.addImage(new Green(new Point2D(i, GameEngine.GRID_HEIGHT)));
-	}
-
-	public void updateHealth(int value) {
-		if (value == 0)
-			return;
-		int x = super.hitpoints;
-		if (x % 2 != 0) {
-			x = x / 2;
-			value++;
-			GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-		} else
-			x = x / 2 - 1;
-		while (value < 0) {
-			if (value % 2 == 0) {
-				GameEngine.getInstance().gui.addImage(new Red(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-				value += 2;
-			} else {
-				GameEngine.getInstance().gui.addImage(new GreenRed(new Point2D(x--, GameEngine.GRID_HEIGHT)));
-				value++;
-			}
+	public void updateHealthBar(int hitpoints) {
+		String code = "";
+		for (int i = 0; i < MAXIMUM_HP / 2; i++) {
+			if (i * 2 < hitpoints - 1)
+				code = "Green";
+			if (i * 2 == hitpoints - 1)
+				code = "GreenRed";
+			if (i * 2 >= hitpoints)
+				code = "Red";
+			GameEngine.getInstance().gui.addImage(GameElement.create(code, new Point2D(i, GameEngine.GRID_HEIGHT), null));
 		}
 	}
 }
