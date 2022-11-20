@@ -14,6 +14,7 @@ public class GameEngine implements Observer {
 
 	public static final int GRID_HEIGHT = 10;
 	public static final int GRID_WIDTH = 10;
+	public static final int LIFEBAR_HEIGHT = 1;
 	public static final int MINIMUM_HP = 1;
 	public static final String STARTING_MAP = "room0";
 	private static final Point2D STARTING_POINT = new Point2D(1, 1);
@@ -34,12 +35,16 @@ public class GameEngine implements Observer {
 
 	private GameEngine() {
 		gui.registerObserver(this);
-		gui.setSize(GRID_WIDTH, GRID_HEIGHT);
+		gui.setSize(GRID_WIDTH, GRID_HEIGHT + LIFEBAR_HEIGHT);
 		gui.go();
 	}
 
 	public Hero getHero() {
 		return hero;
+	}
+	
+	public int getTurns() {
+		return turns;
 	}
 
 	public Room getRoom(String name) {
@@ -57,7 +62,7 @@ public class GameEngine implements Observer {
 		currentRoom = STARTING_MAP;
 		getCurrentRoom().getMap().forEach(g -> gui.addImage(g));
 		addObjects();
-		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
+		gui.setStatusMessage("ROGUE Starter Package - Turns:" + getTurns());
 		gui.update();
 	}
 
@@ -78,7 +83,7 @@ public class GameEngine implements Observer {
 		if (Direction.isDirection(key)) {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
-			turns++;
+			turns = getTurns() + 1;
 			Iterator<GameElement> it = getCurrentRoom().getElements().iterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
@@ -93,7 +98,7 @@ public class GameEngine implements Observer {
 			}
 		}
 
-		gui.setStatusMessage("ROGUE Starter Package - Turns:" + turns);
+		gui.setStatusMessage("ROGUE Starter Package - Turns:" + getTurns());
 		gui.update();
 	}
 
@@ -117,5 +122,4 @@ public class GameEngine implements Observer {
 				return t;
 		return null;
 	}
-
 }

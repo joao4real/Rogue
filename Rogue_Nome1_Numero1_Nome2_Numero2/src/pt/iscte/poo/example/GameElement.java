@@ -43,6 +43,8 @@ public abstract class GameElement implements ImageTile {
             return new Door(point, info);
         case " ":
             return new Floor(point);
+        case "Green":
+        	return new Green(point);
         case "HealingPotion":
             return new HealingPotion(point);
         case "Key":
