@@ -32,6 +32,10 @@ public abstract class GameElement implements ImageTile {
 	public int getLayer() {
 		return DEFAULT_LAYER;
 	}
+	
+	public void setPosition(Point2D point){
+		position = point;
+	}
 
 	public static GameElement create(String code, Point2D point, Scanner info) {
 		switch (code) {

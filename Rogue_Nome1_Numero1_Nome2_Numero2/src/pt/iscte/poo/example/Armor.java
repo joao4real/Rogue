@@ -2,7 +2,7 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Armor extends GameElement implements Pickable {
+public class Armor extends Item {
 
     private static final double DODGE_CHANCE = 0.5;
 

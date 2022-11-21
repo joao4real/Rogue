@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Key extends GameElement implements Pickable {
+public class Key extends Item {
 
     private String code;
 

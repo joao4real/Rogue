@@ -2,7 +2,7 @@ package pt.iscte.poo.example;
 
 import pt.iscte.poo.utils.Point2D;
 
-public class Sword extends GameElement implements Pickable {
+public class Sword extends Item {
     
     private final static int DAMAGE_AMP = 2;
 
