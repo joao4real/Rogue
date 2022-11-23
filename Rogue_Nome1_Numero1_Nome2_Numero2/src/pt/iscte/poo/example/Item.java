@@ -8,8 +8,7 @@ public abstract class Item extends GameElement {
 		super(point, name);
 	}
 
-	public void pick() {
-	}
+	public abstract void pick();
 
 	public void drop() {
 	}

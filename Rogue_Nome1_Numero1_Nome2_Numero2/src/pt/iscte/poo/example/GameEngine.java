@@ -1,5 +1,6 @@
 package pt.iscte.poo.example;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Predicate;
@@ -80,6 +81,9 @@ public class GameEngine implements Observer {
 
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
+		if(key == KeyEvent.VK_1 ||key == KeyEvent.VK_2 || key == KeyEvent.VK_3)
+			hero.drop(key);
+			
 		if (Direction.isDirection(key)) {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
@@ -115,6 +119,7 @@ public class GameEngine implements Observer {
 		if (getRoom(name) == null)
 			addRoom(name);
 		swapRoom(name, point);
+
 	}
 
 	public static <T> T genericSearch(ArrayList<T> list, Predicate<T> p) {
