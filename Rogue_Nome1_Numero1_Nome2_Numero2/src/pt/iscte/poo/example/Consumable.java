@@ -8,7 +8,7 @@ public abstract class Consumable extends Item{
 		super(point, name);
 	}
 
-	public void consume(){
+	public void consume(int keybind){
 		GameEngine.getInstance().gui.removeImage(this);
 	}
 }

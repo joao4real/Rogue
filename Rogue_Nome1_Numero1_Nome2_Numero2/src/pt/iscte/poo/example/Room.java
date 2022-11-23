@@ -78,6 +78,10 @@ public class Room {
 	public void removeElement(GameElement e) {
 		elementList.remove(e);
 	}
+	
+	public void addElement(GameElement e) {
+		elementList.add(e);
+	}
 
 	private int pointToIndex(Point2D point) {
 		return point.getX() + point.getY() * GameEngine.GRID_HEIGHT;
