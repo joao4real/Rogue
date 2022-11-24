@@ -15,6 +15,7 @@ public class Hero extends Movable {
 
 	private double dodgeChance = 0;
 	private GameElement[] inventory = new GameElement[3];
+	private int inventoryPointer;
 
 	public Hero(Point2D point) {
 		super(point, "Hero", MAXIMUM_HP, DAMAGE);
@@ -116,9 +117,8 @@ public class Hero extends Movable {
 
 	public void updateInventory() {
 		for (GameElement e : inventory) {
-			if (e == null)
-				break;
-			GameEngine.getInstance().gui.addImage(e);
+			if (e != null)
+				GameEngine.getInstance().gui.addImage(e);
 		}
 	}
 
@@ -127,8 +127,7 @@ public class Hero extends Movable {
 		updateInventory();
 	}
 
-	public void drop(int key) {
-		int index = keyEventToInt(key);
+	public void drop(int index) {
 		GameElement e = inventory[index];
 		if (e == null)
 			return;
@@ -147,5 +146,21 @@ public class Hero extends Movable {
 			return 2;
 		}
 	}
+	public void keyEvaluator(int keybind) {
+		if(keybind == KeyEvent.VK_1 || keybind == KeyEvent.VK_2 ||keybind == KeyEvent.VK_3)
+			setInventoryPointer(keyEventToInt(keybind));
+		if(keybind == KeyEvent.VK_C && inventory[inventoryPointer] instanceof Consumable)
+			((Consumable) inventory[inventoryPointer]).consume();
+		if(keybind == KeyEvent.VK_D)
+			drop(inventoryPointer);
+			
+		}
 
+	public int getInventoryPointer() {
+		return inventoryPointer;
+	}
+
+	public void setInventoryPointer(int inventoryPointer) {
+		this.inventoryPointer = inventoryPointer;
+	}
 }

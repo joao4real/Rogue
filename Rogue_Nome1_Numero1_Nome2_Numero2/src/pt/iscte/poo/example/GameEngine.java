@@ -81,8 +81,7 @@ public class GameEngine implements Observer {
 
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
-		if(key == KeyEvent.VK_1 ||key == KeyEvent.VK_2 || key == KeyEvent.VK_3)
-			hero.drop(key);
+		hero.keyEvaluator(key);
 			
 		if (Direction.isDirection(key)) {
 			Direction d = Direction.directionFor(key);

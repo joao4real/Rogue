@@ -12,7 +12,6 @@ public class HealingPotion extends Consumable {
 
 	@Override
 	public void pick() {
-		consume();
 	}
 	
 	@Override
