@@ -10,6 +10,11 @@ public abstract class Item extends GameElement {
 
 	public abstract void pick();
 
-	public void drop() {
+	public void drop(int index) {
+		GameElement[] inventory = GameEngine.getInstance().getHero().getInventory();
+		GameElement e = inventory[index];
+		inventory[index] = null;
+		e.setPosition(GameEngine.getInstance().getHero().getPosition());
+		GameEngine.getInstance().getCurrentRoom().addElement(e);
 	}
 }

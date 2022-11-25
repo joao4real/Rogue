@@ -15,4 +15,9 @@ public class Sword extends Item {
         GameEngine.getInstance().getHero().scaleDamage(DAMAGE_AMP);
     }
 
+    @Override
+    public void drop(int index) {
+        GameEngine.getInstance().getHero().scaleDamage(1 / DAMAGE_AMP);
+        super.drop(index);
+    }
 }

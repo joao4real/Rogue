@@ -53,7 +53,7 @@ public class Hero extends Movable {
 		if (!addItem(e))
 			return;
 		GameEngine.getInstance().getCurrentRoom().removeElement(e);
-		ImageMatrixGUI.getInstance().removeImage(e);
+		GameEngine.getInstance().gui.removeImage(e);
 		((Item) e).pick();
 	}
 
@@ -64,21 +64,21 @@ public class Hero extends Movable {
 			return false;
 		} else {
 			e.setPosition(new Point2D(MAXIMUM_HP / 2 + index, GameEngine.GRID_HEIGHT));
-			inventory[index] = e;
+			getInventory()[index] = e;
 			GameEngine.getInstance().gui.addImage(e);
 			return true;
 		}
 	}
 
 	public int getSlot() {
-		for (int i = 0; i < inventory.length; i++)
-			if (inventory[i] == null)
+		for (int i = 0; i < getInventory().length; i++)
+			if (getInventory()[i] == null)
 				return i;
 		return -1;
 	}
 
 	public boolean hasKey(String doorKey) {
-		for (GameElement e : inventory)
+		for (GameElement e : getInventory())
 			if (e instanceof Key)
 				if (((Key) e).getCode().equals(doorKey))
 					return true;
@@ -116,7 +116,7 @@ public class Hero extends Movable {
 	}
 
 	public void updateInventory() {
-		for (GameElement e : inventory) {
+		for (GameElement e : getInventory()) {
 			if (e != null)
 				GameEngine.getInstance().gui.addImage(e);
 		}
@@ -125,15 +125,6 @@ public class Hero extends Movable {
 	public void updateHeroBar() {
 		updateHealthBar(hitpoints);
 		updateInventory();
-	}
-
-	public void drop(int index) {
-		GameElement e = inventory[index];
-		if (e == null)
-			return;
-		inventory[index] = null;
-		e.setPosition(super.position);
-		GameEngine.getInstance().getCurrentRoom().addElement(e);
 	}
 
 	public int keyEventToInt(int key) {
@@ -149,10 +140,10 @@ public class Hero extends Movable {
 	public void keyEvaluator(int keybind) {
 		if(keybind == KeyEvent.VK_1 || keybind == KeyEvent.VK_2 ||keybind == KeyEvent.VK_3)
 			setInventoryPointer(keyEventToInt(keybind));
-		if(keybind == KeyEvent.VK_C && inventory[inventoryPointer] instanceof Consumable)
-			((Consumable) inventory[inventoryPointer]).consume();
-		if(keybind == KeyEvent.VK_D)
-			drop(inventoryPointer);
+		if(keybind == KeyEvent.VK_C && getInventory()[inventoryPointer] instanceof Consumable)
+			((Consumable) getInventory()[inventoryPointer]).consume();	
+		if(keybind == KeyEvent.VK_D && inventory[inventoryPointer] != null)
+			((Item) inventory[inventoryPointer] ).drop(inventoryPointer);
 			
 		}
 
@@ -162,5 +153,9 @@ public class Hero extends Movable {
 
 	public void setInventoryPointer(int inventoryPointer) {
 		this.inventoryPointer = inventoryPointer;
+	}
+
+	public GameElement[] getInventory() {
+		return inventory;
 	}
 }

@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Predicate;
