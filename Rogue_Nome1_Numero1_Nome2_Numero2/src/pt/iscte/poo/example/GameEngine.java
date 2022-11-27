@@ -1,8 +1,12 @@
 package pt.iscte.poo.example;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Predicate;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.observer.Observed;
@@ -26,6 +30,8 @@ public class GameEngine implements Observer {
 
 	private Hero hero;
 	private int turns;
+	private int score;
+	private String name;
 
 	public static GameEngine getInstance() {
 		if (INSTANCE == null)
@@ -42,9 +48,13 @@ public class GameEngine implements Observer {
 	public Hero getHero() {
 		return hero;
 	}
-	
+
 	public int getTurns() {
 		return turns;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	public Room getRoom(String name) {
@@ -62,7 +72,8 @@ public class GameEngine implements Observer {
 		currentRoom = STARTING_MAP;
 		getCurrentRoom().getMap().forEach(g -> gui.addImage(g));
 		addObjects();
-		gui.setStatusMessage("ROGUE Starter Package - Turns:" + getTurns());
+		name = gui.askUser("Choose your Nickname");
+		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + getTurns());
 		gui.update();
 	}
 
@@ -81,7 +92,7 @@ public class GameEngine implements Observer {
 		int key = ((ImageMatrixGUI) source).keyPressed();
 
 		hero.keyEvaluator(key);
-			
+
 		if (Direction.isDirection(key)) {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
@@ -96,11 +107,22 @@ public class GameEngine implements Observer {
 						it.remove();
 					} else
 						m.move(d);
+					if (getHero().getHitpoints() < MINIMUM_HP) {
+						Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!"};
+						int n = JOptionPane.showOptionDialog(new JFrame(),
+								"You achieved a total score of  " + score + " points!", "YOU WERE KILLED!",
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+								options[0]);
+						if(n == JOptionPane.YES_OPTION) {
+							//restart()
+						} else System.exit(0);
+							
+					}	
 				}
 			}
 		}
 
-		gui.setStatusMessage("ROGUE Starter Package - Turns:" + getTurns());
+		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + getTurns());
 		gui.update();
 	}
 

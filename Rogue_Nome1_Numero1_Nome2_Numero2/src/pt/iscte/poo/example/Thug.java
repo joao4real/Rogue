@@ -20,7 +20,7 @@ public class Thug extends Movable {
 
 	@Override
 	public void attack(Movable m) {
-		if (Math.random() < ATTACK_CHANCE)
+		if (Math.random() < ATTACK_CHANCE && m instanceof Hero)
 			super.attack(m);
 	}
 

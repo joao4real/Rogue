@@ -9,14 +9,12 @@ public class HealingPotion extends Consumable {
 	public HealingPotion(Point2D point) {
 		super(point, "HealingPotion");
 	}
-
-	@Override
-	public void pick() {
-	}
 	
 	@Override
 	public void consume() {
-		GameEngine.getInstance().getHero().setHitpoints(HEAL);
+		Hero hero = GameEngine.getInstance().getHero();
+		hero.setHitpoints(HEAL);
+		hero.setPoisonStatus(false);
 		super.consume();
 	}
 }

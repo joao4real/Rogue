@@ -20,4 +20,9 @@ public class Skeleton extends Movable {
 		moveTurn = moveTurn ? false : true;
 	}
 
+	@Override
+	public void attack(Movable m) {
+		if(m instanceof Hero)
+			super.attack(m);
+	}
 }

@@ -1,19 +1,17 @@
 package pt.iscte.poo.example;
 
 import java.awt.event.KeyEvent;
-
-import pt.iscte.poo.gui.ImageMatrixGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
 public class Hero extends Movable {
 
-	private static final int MAXIMUM_HP = 10;
+	public static final int MAXIMUM_HP = 10;
 	private static final int DAMAGE = -1;
-	private static final int DEFAULT_HERO_LAYER = 1;
 
 	private double dodgeChance = 0;
+	private boolean poisoned = false;
 	private GameElement[] inventory = new GameElement[3];
 	private int inventoryPointer;
 
@@ -27,18 +25,14 @@ public class Hero extends Movable {
 	}
 
 	@Override
-	public int getLayer() {
-		return DEFAULT_HERO_LAYER;
-	}
-
-	@Override
 	public void move(Direction dir) {
+		if(poisoned == true)
+			setHitpoints(Scorpio.DAMAGE);
 		Vector2D vector = dir.asVector();
 		Point2D newPoint = super.position.plus(vector);
 		GameElement e = GameEngine.getInstance().getCurrentRoom().getElement(newPoint);
-		if (e instanceof Item) {
-			pick(e);
-		}
+		if (e instanceof Item) 
+			((Item) e).pick(e);
 		super.move(dir);
 		if (e instanceof Door) {
 			Door d = (Door) e;
@@ -46,27 +40,6 @@ public class Hero extends Movable {
 				GameEngine.getInstance().manageRoom(d.getRoomName(), d.getHeroPoint());
 			else if (hasKey(d.getKeyCode()))
 				d.open();
-		}
-	}
-
-	public void pick(GameElement e) {
-		if (!addItem(e))
-			return;
-		GameEngine.getInstance().getCurrentRoom().removeElement(e);
-		GameEngine.getInstance().gui.removeImage(e);
-		((Item) e).pick();
-	}
-
-	public boolean addItem(GameElement e) {
-		int index = getSlot();
-		if (index < 0) {
-			System.out.println("Inventory is Full!");
-			return false;
-		} else {
-			e.setPosition(new Point2D(MAXIMUM_HP / 2 + index, GameEngine.GRID_HEIGHT));
-			getInventory()[index] = e;
-			GameEngine.getInstance().gui.addImage(e);
-			return true;
 		}
 	}
 
@@ -97,7 +70,7 @@ public class Hero extends Movable {
 		updateHealthBar(super.hitpoints);
 	}
 
-	public void scaleDamage(int value) {
+	public void scaleDamage(double value) {
 		super.damage *= value;
 	}
 
@@ -137,9 +110,10 @@ public class Hero extends Movable {
 			return 2;
 		}
 	}
+	
 	public void keyEvaluator(int keybind) {
 		if(keybind == KeyEvent.VK_1 || keybind == KeyEvent.VK_2 ||keybind == KeyEvent.VK_3)
-			setInventoryPointer(keyEventToInt(keybind));
+			inventoryPointer = keyEventToInt(keybind);
 		if(keybind == KeyEvent.VK_C && getInventory()[inventoryPointer] instanceof Consumable)
 			((Consumable) getInventory()[inventoryPointer]).consume();	
 		if(keybind == KeyEvent.VK_D && inventory[inventoryPointer] != null)
@@ -151,11 +125,15 @@ public class Hero extends Movable {
 		return inventoryPointer;
 	}
 
-	public void setInventoryPointer(int inventoryPointer) {
-		this.inventoryPointer = inventoryPointer;
-	}
-
 	public GameElement[] getInventory() {
 		return inventory;
+	}
+
+	public boolean isPoisoned() {
+		return poisoned;
+	}
+	
+	public void setPoisonStatus(boolean currentStatus) {
+		poisoned = currentStatus;
 	}
 }

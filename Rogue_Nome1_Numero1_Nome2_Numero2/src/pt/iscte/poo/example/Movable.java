@@ -6,6 +6,7 @@ import pt.iscte.poo.utils.Vector2D;
 
 public abstract class Movable extends GameElement {
 
+	private static final int DEFAULT_MOVABLE_LAYER = 1;
 	public final int maxHitpoints;
 	public int hitpoints;
 	public int damage;
@@ -15,6 +16,11 @@ public abstract class Movable extends GameElement {
 		maxHitpoints = hitpoints;
 		this.hitpoints = hitpoints;
 		this.damage = damage;
+	}
+	
+	@Override
+	public int getLayer() {
+		return DEFAULT_MOVABLE_LAYER;
 	}
 
 	public int getHitpoints() {
@@ -36,9 +42,8 @@ public abstract class Movable extends GameElement {
 		if (e.isWalkable)
 			super.position = newPoint;
 	}
-
+	
 	public void attack(Movable m){
 		m.setHitpoints(damage);
 	}
-
 }

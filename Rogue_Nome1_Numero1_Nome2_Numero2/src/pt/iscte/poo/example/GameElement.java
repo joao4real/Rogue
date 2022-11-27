@@ -57,6 +57,8 @@ public abstract class GameElement implements ImageTile {
 			return new Key(point, info);
 		case "Red":
 			return new Red(point);
+		case "Scorpio":
+			return new Scorpio(point);
 		case "Skeleton":
 			return new Skeleton(point);
 		case "Sword":
