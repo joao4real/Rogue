@@ -1,6 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Predicate;
@@ -103,27 +102,38 @@ public class GameEngine implements Observer {
 				if (e instanceof Movable) {
 					Movable m = (Movable) e;
 					if (m.getHitpoints() < MINIMUM_HP) {
-						gui.removeImage(e);
+						((Movable)m).die(m);
 						it.remove();
 					} else
 						m.move(d);
 					if (getHero().getHitpoints() < MINIMUM_HP) {
-						Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!"};
+						Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!" };
 						int n = JOptionPane.showOptionDialog(new JFrame(),
 								"You achieved a total score of  " + score + " points!", "YOU DIED!",
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-								options[0]);
-						if(n == JOptionPane.YES_OPTION) {
-							//restart()
-						} else System.exit(0);
-							
-					}	
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+						if (n == JOptionPane.YES_OPTION) {
+							restart();
+						} else
+							System.exit(0);
+					}
 				}
 			}
 		}
 
 		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + getTurns());
 		gui.update();
+	}
+
+	private void restart() {
+		gui.clearImages();
+		turns = 0;
+		score = 0;
+		Iterator<Room> it = rooms.iterator();
+		while (it.hasNext()) {
+			it.next();
+			it.remove();
+		}
+		start();
 	}
 
 	public void swapRoom(String name, Point2D point) {

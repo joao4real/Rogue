@@ -1,8 +1,6 @@
 package pt.iscte.poo.example;
 
-import pt.iscte.poo.utils.Direction;
-import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.utils.Vector2D;
+import pt.iscte.poo.utils.*;
 
 public abstract class Movable extends GameElement {
 
@@ -45,5 +43,10 @@ public abstract class Movable extends GameElement {
 	
 	public void attack(Movable m){
 		m.setHitpoints(damage);
+	}
+	
+	public void die(Movable m) {
+		if (m.getHitpoints() < GameEngine.MINIMUM_HP) 
+			GameEngine.getInstance().gui.removeImage(m);
 	}
 }
