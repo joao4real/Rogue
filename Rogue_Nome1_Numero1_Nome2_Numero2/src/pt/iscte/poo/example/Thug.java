@@ -15,12 +15,12 @@ public class Thug extends Movable {
 
 	@Override
 	public void move(Direction d) {
-		super.move(Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition())));
+		super.move(Direction.forVector(super.position.vectorTo((GameEngine.getInstance().getHero()).getPosition())));
 	}
 
 	@Override
 	public void attack(Movable m) {
-		if (Math.random() < ATTACK_CHANCE && m instanceof Hero)
+		if (Math.random() < ATTACK_CHANCE)
 			super.attack(m);
 	}
 

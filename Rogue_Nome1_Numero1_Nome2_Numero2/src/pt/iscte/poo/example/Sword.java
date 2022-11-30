@@ -12,13 +12,13 @@ public class Sword extends Item {
 
     @Override
     public void pick(GameElement e) {
-        GameEngine.getInstance().getHero().scaleDamage(DAMAGE_AMP);
+    	GameEngine.getInstance().getHero().scaleDamage(DAMAGE_AMP);
         super.pick(e);
     }
 
     @Override
     public void drop(int index) {
-        GameEngine.getInstance().getHero().scaleDamage(1 / DAMAGE_AMP);
+    	GameEngine.getInstance().getHero().scaleDamage(1 / DAMAGE_AMP);
         super.drop(index);
     }
 }

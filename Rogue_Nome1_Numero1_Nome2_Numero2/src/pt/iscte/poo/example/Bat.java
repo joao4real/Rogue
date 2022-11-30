@@ -22,9 +22,10 @@ public class Bat extends Movable {
 
 	@Override
 	public void attack(Movable m) {
-		if (Math.random() > 0.5 && m instanceof Hero)
+		if (Math.random() > 0.5) {
 			super.attack(m);
-		super.setHitpoints(HEAL);
+			super.setHitpoints(HEAL);
+		}
 	}
 
 }

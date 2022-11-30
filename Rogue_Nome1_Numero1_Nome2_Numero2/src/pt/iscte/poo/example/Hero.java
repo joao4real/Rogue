@@ -9,11 +9,19 @@ public class Hero extends Movable {
 
 	public static final int MAXIMUM_HP = 10;
 	private static final int DAMAGE = -1;
+	
+	//private static Hero INSTANCE = null;
 
 	private double dodgeChance = 0;
 	private boolean poisoned = false;
 	private GameElement[] inventory = new GameElement[3];
 	private int inventoryPointer;
+	
+/*	public static Hero getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new Hero(GameEngine.STARTING_POINT);
+        return INSTANCE;
+    }*/
 
 	public Hero(Point2D point) {
 		super(point, "Hero", MAXIMUM_HP, DAMAGE);
@@ -44,14 +52,14 @@ public class Hero extends Movable {
 	}
 
 	public int getSlot() {
-		for (int i = 0; i < getInventory().length; i++)
-			if (getInventory()[i] == null)
+		for (int i = 0; i < inventory.length; i++)
+			if (inventory[i] == null)
 				return i;
 		return -1;
 	}
 
 	public boolean hasKey(String doorKey) {
-		for (GameElement e : getInventory())
+		for (GameElement e : inventory)
 			if (e instanceof Key)
 				if (((Key) e).getCode().equals(doorKey))
 					return true;
@@ -89,7 +97,7 @@ public class Hero extends Movable {
 	}
 
 	public void updateInventory() {
-		for (GameElement e : getInventory()) {
+		for (GameElement e : inventory) {
 			if (e != null)
 				GameEngine.getInstance().gui.addImage(e);
 		}
@@ -114,10 +122,10 @@ public class Hero extends Movable {
 	public void keyEvaluator(int keybind) {
 		if(keybind == KeyEvent.VK_1 || keybind == KeyEvent.VK_2 ||keybind == KeyEvent.VK_3)
 			inventoryPointer = keyEventToInt(keybind);
-		if(keybind == KeyEvent.VK_C && getInventory()[inventoryPointer] instanceof Consumable)
-			((Consumable) getInventory()[inventoryPointer]).consume();	
+		if(keybind == KeyEvent.VK_C && inventory[inventoryPointer] instanceof Consumable)
+			((Consumable) inventory[inventoryPointer]).consume();	
 		if(keybind == KeyEvent.VK_D && inventory[inventoryPointer] != null)
-			((Item) inventory[inventoryPointer] ).drop(inventoryPointer);
+			((Item) inventory[inventoryPointer]).drop(inventoryPointer);
 			
 		}
 
@@ -135,5 +143,12 @@ public class Hero extends Movable {
 	
 	public void setPoisonStatus(boolean currentStatus) {
 		poisoned = currentStatus;
+	}
+	
+	public boolean isInventoryEmpty() {
+		for(int i = 0; i < inventory.length; i++)
+			if(inventory[i] != null)
+				return false;
+		return true;
 	}
 }

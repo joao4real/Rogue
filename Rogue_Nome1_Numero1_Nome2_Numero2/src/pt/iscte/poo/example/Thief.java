@@ -15,45 +15,49 @@ public class Thief extends Movable {
 
 	@Override
 	public void move(Direction d) {
-		if (stolenElement == null)
-			super.move(Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition())));
-		else
-			super.move(Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition()))
-					.opposite());
+		d = Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition()));
+		if (stolenElement != null)
+			d = d.opposite();
+		super.move(d);
 	}
 
-	public int getRandomElement() {
-		double r = Math.random();
-		if (r < 0.33)
-			return 0;
-		if (0.33 < r && r < 0.66)
-			return 1;
-		return 2;
+	public GameElement removeRandomElement() {
+		GameElement[] inventory = GameEngine.getInstance().getHero().getInventory();
+		if (GameEngine.getInstance().getHero().isInventoryEmpty())
+			return null;
+		int i = (int) (Math.random() * inventory.length);
+		GameElement e = inventory[i];
+		while (e == null) {
+			i = (int) (Math.random() * inventory.length);
+			e = inventory[i];
+		}
+		inventory[i] = null;
+		stolenElement = e;
+		System.out.println(stolenElement);
+		GameEngine.getInstance().gui.removeImage(e);
+		return stolenElement;
+
 	}
 
 	@Override
 	public void attack(Movable m) {
-		int x = getRandomElement();
-		while(GameEngine.getInstance().getHero().getInventory()[x] == null)
-			x = getRandomElement();
-		 GameElement e = 
+		if (m instanceof Hero) {
+			removeRandomElement();
+			return;
+		}
 	}
 
 	public GameElement getStolenElement() {
 		return stolenElement;
 	}
 
-	public void setStolenElement(GameElement stolenElement) {
-		this.stolenElement = stolenElement;
-	}
-
 	@Override
-	public void die(Movable m) {
+	public void die() {
 		if (stolenElement != null) {
 			stolenElement.setPosition(super.position);
 			GameEngine.getInstance().gui.addImage(stolenElement);
 			GameEngine.getInstance().getCurrentRoom().addElement(stolenElement);
-		}
-		super.die(m);
+	}
+		super.die();
 	}
 }

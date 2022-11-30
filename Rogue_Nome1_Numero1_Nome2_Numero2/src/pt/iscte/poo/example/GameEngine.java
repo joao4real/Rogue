@@ -20,7 +20,7 @@ public class GameEngine implements Observer {
 	public static final int LIFEBAR_HEIGHT = 1;
 	public static final int MINIMUM_HP = 1;
 	public static final String STARTING_MAP = "room0";
-	private static final Point2D STARTING_POINT = new Point2D(1, 1);
+	public static final Point2D STARTING_POINT = new Point2D(1, 1);
 
 	public String currentRoom;
 	private static GameEngine INSTANCE = null;
@@ -100,12 +100,7 @@ public class GameEngine implements Observer {
 			while (it.hasNext()) {
 				GameElement e = it.next();
 				if (e instanceof Movable) {
-					Movable m = (Movable) e;
-					if (m.getHitpoints() < MINIMUM_HP) {
-						((Movable)m).die(m);
-						it.remove();
-					} else
-						m.move(d);
+					((Movable) e).move(d);
 					if (getHero().getHitpoints() < MINIMUM_HP) {
 						Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!" };
 						int n = JOptionPane.showOptionDialog(new JFrame(),

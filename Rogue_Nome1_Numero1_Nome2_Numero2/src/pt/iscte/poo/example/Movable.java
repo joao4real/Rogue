@@ -15,7 +15,7 @@ public abstract class Movable extends GameElement {
 		this.hitpoints = hitpoints;
 		this.damage = damage;
 	}
-	
+
 	@Override
 	public int getLayer() {
 		return DEFAULT_MOVABLE_LAYER;
@@ -27,6 +27,8 @@ public abstract class Movable extends GameElement {
 
 	public void setHitpoints(int value) {
 		hitpoints = Math.min(value + hitpoints, maxHitpoints);
+		if(hitpoints <=GameEngine.MINIMUM_HP)
+			die();
 		System.out.println(getName() + hitpoints);
 	}
 
@@ -40,13 +42,15 @@ public abstract class Movable extends GameElement {
 		if (e.isWalkable)
 			super.position = newPoint;
 	}
-	
-	public void attack(Movable m){
-		m.setHitpoints(damage);
+
+	public void attack(Movable m) {
+		if (m instanceof Hero || this instanceof Hero)
+			m.setHitpoints(damage);
+		
 	}
-	
-	public void die(Movable m) {
-		if (m.getHitpoints() < GameEngine.MINIMUM_HP) 
-			GameEngine.getInstance().gui.removeImage(m);
+
+	public void die() {
+		GameEngine.getInstance().getCurrentRoom().getElements().remove(this);
+		GameEngine.getInstance().gui.removeImage(this);
 	}
 }
