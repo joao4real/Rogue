@@ -32,8 +32,12 @@ public abstract class GameElement implements ImageTile {
 	public int getLayer() {
 		return DEFAULT_LAYER;
 	}
-	
-	public void setPosition(Point2D point){
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPosition(Point2D point) {
 		position = point;
 	}
 
@@ -58,7 +62,7 @@ public abstract class GameElement implements ImageTile {
 		case "Red":
 			return new Red(point);
 		case "Scorpio":
-			return new Scorpio(point);
+			return new Scorpion(point);
 		case "Skeleton":
 			return new Skeleton(point);
 		case "Sword":
