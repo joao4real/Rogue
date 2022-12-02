@@ -10,8 +10,7 @@ public abstract class Consumable extends Item {
 
 	public void consume() {
 		GameEngine.getInstance().gui.removeImage(this);
-		GameEngine.getInstance().getHero().getInventory()
-		[GameEngine.getInstance().getHero().getInventoryPointer()] = null;
+		Hero.getInstance().getInventory()[Hero.getInstance().getInventoryPointer()] = null;
 
 	}
 }
