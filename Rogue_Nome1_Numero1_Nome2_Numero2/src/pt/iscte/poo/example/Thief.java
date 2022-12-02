@@ -6,7 +6,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Thief extends Movable {
 
 	private static final int DAMAGE = 0;
-	private static final int MAXIMUM_HP = 10;
+	private static final int MAXIMUM_HP = 5;
 	private GameElement stolenElement;
 
 	public Thief(Point2D point) {
@@ -33,7 +33,7 @@ public class Thief extends Movable {
 		}
 		inventory[i] = null;
 		stolenElement = e;
-		System.out.println(stolenElement);
+		System.out.println("Your " + stolenElement.getName() + " got stolen by a Thief!");
 		GameEngine.getInstance().gui.removeImage(e);
 		return stolenElement;
 
@@ -57,7 +57,7 @@ public class Thief extends Movable {
 			stolenElement.setPosition(super.position);
 			GameEngine.getInstance().gui.addImage(stolenElement);
 			GameEngine.getInstance().getCurrentRoom().addElement(stolenElement);
-	}
+		}
 		super.die();
 	}
 }

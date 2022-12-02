@@ -21,15 +21,21 @@ public abstract class Movable extends GameElement {
 		return DEFAULT_MOVABLE_LAYER;
 	}
 
-	public int getHitpoints() {
-		return hitpoints;
+	public void setHitpoints(int value) {
+		int tmp = hitpoints;
+		hitpoints = Math.max(0, Math.min(value + hitpoints, maxHitpoints));
+		if (!(this instanceof Hero))
+			calculateScore(tmp - hitpoints);
+		if (hitpoints < GameEngine.MINIMUM_HP)
+			die();
 	}
 
-	public void setHitpoints(int value) {
-		hitpoints = Math.min(value + hitpoints, maxHitpoints);
-		if(hitpoints <=GameEngine.MINIMUM_HP)
-			die();
-		System.out.println(getName() + hitpoints);
+	public void calculateScore(int value) {
+		GameEngine.getInstance().addScore(value);
+		if (hitpoints < GameEngine.MINIMUM_HP) {
+			int score = Hero.getInstance().hasItem("Sword") ? maxHitpoints * 10 : maxHitpoints * 5;
+			GameEngine.getInstance().addScore(score);
+		}
 	}
 
 	public void move(Direction d) {
@@ -46,10 +52,12 @@ public abstract class Movable extends GameElement {
 	public void attack(Movable m) {
 		if (m instanceof Hero || this instanceof Hero)
 			m.setHitpoints(damage);
-		
+
 	}
 
 	public void die() {
+		if (this instanceof Hero)
+			GameEngine.getInstance().lose();
 		GameEngine.getInstance().getCurrentRoom().getElements().remove(this);
 		GameEngine.getInstance().gui.removeImage(this);
 	}

@@ -44,18 +44,6 @@ public class GameEngine implements Observer {
 		gui.go();
 	}
 
-	public Hero getHero() {
-		return hero;
-	}
-
-	public int getTurns() {
-		return turns;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
 	public Room getRoom(String name) {
 		Room r = genericSearch(rooms, t -> t.getName().equals(name));
 		return r;
@@ -64,16 +52,20 @@ public class GameEngine implements Observer {
 	public Room getCurrentRoom() {
 		return genericSearch(rooms, r -> r.getName().equals(currentRoom));
 	}
+	
+	public Hero getHero() {
+		return hero;
+	}
 
 	public void start() {
-		hero = new Hero(STARTING_POINT);
+		hero = Hero.getInstance();
 		addRoom(STARTING_MAP);
 		currentRoom = STARTING_MAP;
 		getCurrentRoom().getMap().forEach(g -> gui.addImage(g));
 		addObjects();
-		name = gui.askUser("Choose your Nickname");
-		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + getTurns());
+		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 		gui.update();
+		name = gui.askUser("Choose your Nickname");
 	}
 
 	public void addRoom(String name) {
@@ -95,27 +87,18 @@ public class GameEngine implements Observer {
 		if (Direction.isDirection(key)) {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
-			turns = getTurns() + 1;
+			turns++;
 			Iterator<GameElement> it = getCurrentRoom().getElements().iterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
 				if (e instanceof Movable) {
 					((Movable) e).move(d);
-					if (getHero().getHitpoints() < MINIMUM_HP) {
-						Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!" };
-						int n = JOptionPane.showOptionDialog(new JFrame(),
-								"You achieved a total score of  " + score + " points!", "YOU DIED!",
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-						if (n == JOptionPane.YES_OPTION) {
-							restart();
-						} else
-							System.exit(0);
-					}
+
 				}
 			}
 		}
 
-		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + getTurns());
+		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 		gui.update();
 	}
 
@@ -128,6 +111,7 @@ public class GameEngine implements Observer {
 			it.next();
 			it.remove();
 		}
+		hero = Hero.resetInstance();
 		start();
 	}
 
@@ -136,6 +120,7 @@ public class GameEngine implements Observer {
 		currentRoom = name;
 		getCurrentRoom().getMap().forEach(e -> gui.addImage(e));
 		addObjects();
+		getCurrentRoom().checkDoors();
 		hero.setPosition(point);
 		hero.updateHeroBar();
 	}
@@ -153,4 +138,40 @@ public class GameEngine implements Observer {
 				return t;
 		return null;
 	}
+
+	public void win() {
+		Object[] options = { "Try Again", "Exit", "Show HighscoreBoard" };
+		int n = JOptionPane.showOptionDialog(new JFrame(),
+				"Congratulations! You achieved a total score of  " + (score-turns) + " points!", "YOU WON!",
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		switch (n) {
+		case JOptionPane.YES_OPTION:
+			restart();
+			break;
+		case JOptionPane.CANCEL_OPTION:
+			showHighScoreBoard();
+			break;
+		default:
+			System.exit(0);
+		}
+	}
+
+	public void lose() {
+		Object[] options = { "Try Again", "Exit" };
+		int n = JOptionPane.showOptionDialog(new JFrame(), "You achieved a total score of  " + (score-turns) + " points!",
+				"YOU DIED!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		if (n == JOptionPane.YES_OPTION)
+			restart();
+		else
+			System.exit(0);
+	}
+
+	public void showHighScoreBoard() {
+
+	}
+
+	public void addScore(int i) {
+		score += i;
+	}
+
 }

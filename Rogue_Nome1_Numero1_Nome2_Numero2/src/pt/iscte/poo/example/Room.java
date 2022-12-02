@@ -86,4 +86,10 @@ public class Room {
 	private int pointToIndex(Point2D point) {
 		return point.getX() + point.getY() * GameEngine.GRID_HEIGHT;
 	}
+	
+	public void checkDoors(){
+		for(GameElement e : elementList)
+			if(e instanceof Door)
+				((Door) e).checkDoor();
+	}
 }
