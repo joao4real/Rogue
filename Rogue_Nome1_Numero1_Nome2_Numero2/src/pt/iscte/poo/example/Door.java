@@ -5,6 +5,8 @@ import java.util.Scanner;
 import pt.iscte.poo.utils.Point2D;
 
 public class Door extends GameElement {
+	
+	public static boolean DOOR_TO_OPEN = false;
 
 	private boolean isOpen = false;
 	private String roomName;
@@ -15,9 +17,9 @@ public class Door extends GameElement {
 		super(point, "DoorClosed");
 		roomName = info.next();
 		heroPoint = new Point2D(info.nextInt(), info.nextInt());
-		if (info.hasNext())
+		if (info.hasNext()) {
 			keyCode = info.next();
-		else
+		} else
 			isOpen = true;
 	}
 
@@ -45,5 +47,12 @@ public class Door extends GameElement {
 
 	public boolean isOpen() {
 		return isOpen;
+	}
+
+	public void checkDoor(){
+		if (Hero.getInstance().hasItem(keyCode) && DOOR_TO_OPEN){
+			isOpen = true;
+			DOOR_TO_OPEN = false;
+		}
 	}
 }
