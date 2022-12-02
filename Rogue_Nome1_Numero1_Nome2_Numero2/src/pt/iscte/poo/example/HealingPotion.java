@@ -12,9 +12,8 @@ public class HealingPotion extends Consumable {
 	
 	@Override
 	public void consume() {
-		Hero hero = GameEngine.getInstance().getHero();
-		hero.setHitpoints(HEAL);
-		hero.setPoisonStatus(false);
+		Hero.getInstance().setHitpoints(HEAL);
+		Hero.getInstance().setPoisonStatus(false);
 		super.consume();
 	}
 }
