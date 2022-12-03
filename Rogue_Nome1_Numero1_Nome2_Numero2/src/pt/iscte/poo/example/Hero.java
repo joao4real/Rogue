@@ -44,7 +44,7 @@ public class Hero extends Movable {
 		Vector2D vector = dir.asVector();
 		Point2D newPoint = super.position.plus(vector);
 		GameElement e = GameEngine.getInstance().getCurrentRoom().getElement(newPoint);
-		if (e instanceof Item)
+		if (e instanceof Item) 
 			((Item) e).pick(e);
 		super.move(dir);
 		if (e instanceof Door) {
@@ -69,13 +69,13 @@ public class Hero extends Movable {
 
 	public boolean hasItem(String code) {
 		for (GameElement e : inventory) {
-			if (e == null)
-				break;
-			if (e.getName().equals(code))
-				return true;
-			if (e instanceof Key)
-				if (((Key) e).getCode().equals(code))
+			if (e != null) {
+				if (e.getName().equals(code))
 					return true;
+				if (e instanceof Key)
+					if (((Key) e).getCode().equals(code))
+						return true;
+			}
 		}
 		return false;
 	}

@@ -1,6 +1,10 @@
 package pt.iscte.poo.example;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -26,6 +30,7 @@ public class GameEngine implements Observer {
 	private static GameEngine INSTANCE = null;
 	public ImageMatrixGUI gui = ImageMatrixGUI.getInstance();
 	public ArrayList<Room> rooms = new ArrayList<>();
+	public ArrayList<Player> players = new ArrayList<>();
 
 	private Hero hero;
 	private int turns;
@@ -52,7 +57,7 @@ public class GameEngine implements Observer {
 	public Room getCurrentRoom() {
 		return genericSearch(rooms, r -> r.getName().equals(currentRoom));
 	}
-	
+
 	public Hero getHero() {
 		return hero;
 	}
@@ -93,11 +98,9 @@ public class GameEngine implements Observer {
 				GameElement e = it.next();
 				if (e instanceof Movable) {
 					((Movable) e).move(d);
-
 				}
 			}
 		}
-
 		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 		gui.update();
 	}
@@ -140,9 +143,11 @@ public class GameEngine implements Observer {
 	}
 
 	public void win() {
+		players.add(new Player(name, score));
+		printInFile();
 		Object[] options = { "Try Again", "Exit", "Show HighscoreBoard" };
 		int n = JOptionPane.showOptionDialog(new JFrame(),
-				"Congratulations! You achieved a total score of  " + (score-turns) + " points!", "YOU WON!",
+				"Congratulations! You achieved a total score of  " + (score - turns) + " points!", "YOU WON!",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 		switch (n) {
 		case JOptionPane.YES_OPTION:
@@ -158,12 +163,33 @@ public class GameEngine implements Observer {
 
 	public void lose() {
 		Object[] options = { "Try Again", "Exit" };
-		int n = JOptionPane.showOptionDialog(new JFrame(), "You achieved a total score of  " + (score-turns) + " points!",
-				"YOU DIED!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		int n = JOptionPane.showOptionDialog(new JFrame(),
+				"You achieved a total score of  " + (score - turns) + " points!", "YOU DIED!",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (n == JOptionPane.YES_OPTION)
 			restart();
 		else
 			System.exit(0);
+	}
+	public void printInFile() {
+		try {
+		PointsComparator comp = new PointsComparator();
+		players.sort(comp);
+		PrintWriter pw = new PrintWriter(new File("highscore.txt"));
+		players.forEach(p -> pw.println(p));
+		}catch (FileNotFoundException e) {
+			System.err.println("File not found");
+		}
+}
+	
+	private class PointsComparator implements Comparator<Player> {
+		
+		@Override
+		public int compare(Player p1, Player p2) {
+			if(p1.getPoints() == p2.getPoints())
+				return String.CASE_INSENSITIVE_ORDER.compare(p1.getName(), p2.getName());
+			return p1.getPoints() - p2.getPoints();
+		}
 	}
 
 	public void showHighScoreBoard() {
@@ -173,5 +199,4 @@ public class GameEngine implements Observer {
 	public void addScore(int i) {
 		score += i;
 	}
-
 }

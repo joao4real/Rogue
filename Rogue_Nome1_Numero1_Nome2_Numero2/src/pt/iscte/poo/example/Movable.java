@@ -24,10 +24,12 @@ public abstract class Movable extends GameElement {
 	public void setHitpoints(int value) {
 		int tmp = hitpoints;
 		hitpoints = Math.max(0, Math.min(value + hitpoints, maxHitpoints));
+		System.out.println(getName() + hitpoints);
 		if (!(this instanceof Hero))
 			calculateScore(tmp - hitpoints);
 		if (hitpoints < GameEngine.MINIMUM_HP)
 			die();
+
 	}
 
 	public void calculateScore(int value) {

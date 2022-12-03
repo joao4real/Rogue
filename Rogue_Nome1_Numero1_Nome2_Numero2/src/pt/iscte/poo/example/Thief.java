@@ -16,15 +16,15 @@ public class Thief extends Movable {
 	@Override
 	public void move(Direction d) {
 		d = Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition()));
-		if (stolenElement != null)
+		if (stolenElement != null || GameEngine.getInstance().getHero().isInventoryEmpty())
 			d = d.opposite();
 		super.move(d);
 	}
 
-	public GameElement removeRandomElement() {
+	public void removeRandomElement() {
 		GameElement[] inventory = GameEngine.getInstance().getHero().getInventory();
 		if (GameEngine.getInstance().getHero().isInventoryEmpty())
-			return null;
+			return;
 		int i = (int) (Math.random() * inventory.length);
 		GameElement e = inventory[i];
 		while (e == null) {
@@ -35,8 +35,6 @@ public class Thief extends Movable {
 		stolenElement = e;
 		System.out.println("Your " + stolenElement.getName() + " got stolen by a Thief!");
 		GameEngine.getInstance().gui.removeImage(e);
-		return stolenElement;
-
 	}
 
 	@Override
