@@ -70,9 +70,11 @@ public class GameEngine implements Observer {
 		currentRoom = STARTING_MAP;
 		getCurrentRoom().getMap().forEach(g -> gui.addImage(g));
 		addObjects();
-		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 		gui.update();
 		name = gui.askUser("Choose your Nickname");
+		if (name.equals(""))
+			name = "Unknown";
+		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 	}
 
 	public void addRoom(String name) {
@@ -150,6 +152,7 @@ public class GameEngine implements Observer {
 		int n = JOptionPane.showOptionDialog(new JFrame(),
 				"Congratulations! You achieved a total score of  " + (score - turns) + " points!", "YOU WON!",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
 		switch (n) {
 		case JOptionPane.YES_OPTION:
 			restart();
@@ -177,7 +180,7 @@ public class GameEngine implements Observer {
 		try {
 			Scanner playerScanner = new Scanner(new File("highscore.txt"));
 			while (playerScanner.hasNextLine()) {
-				players.add(createPlayer(playerScanner.nextLine()));
+				players.add(Player.playerFromLine(playerScanner.nextLine()));
 			}
 			playerScanner.close();
 		} catch (FileNotFoundException e) {
@@ -185,17 +188,9 @@ public class GameEngine implements Observer {
 		}
 	}
 
-	public Player createPlayer(String line) {
-			Scanner sc = new Scanner(line);
-			String name = sc.next();
-			sc.next();
-			int points = sc.nextInt();
-			sc.close();
-			return new Player(name,points);
-	}
-	
 	public void printInFile() {
 		try {
+			players.add(new Player(name, score - turns));
 			PointsComparator comp = new PointsComparator();
 			players.sort(comp);
 			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
@@ -212,7 +207,7 @@ public class GameEngine implements Observer {
 		public int compare(Player p1, Player p2) {
 			if (p1.getPoints() == p2.getPoints())
 				return String.CASE_INSENSITIVE_ORDER.compare(p1.getName(), p2.getName());
-			return p1.getPoints() - p2.getPoints();
+			return p2.getPoints() - p1.getPoints();
 		}
 	}
 
