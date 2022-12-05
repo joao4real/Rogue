@@ -11,14 +11,6 @@ public class Player {
 		this.points = points;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public int getPoints() {
-		return points;
-	}
-
 	public static Player playerFromLine(String line) {
 		Scanner sc = new Scanner(line);
 		String name = sc.next();
@@ -26,6 +18,13 @@ public class Player {
 		int points = sc.nextInt();
 		sc.close();
 		return new Player(name, points);
+	}
+	
+	public String getName() {
+		return name;
+	}
 
+	public int getPoints() {
+		return points;
 	}
 }

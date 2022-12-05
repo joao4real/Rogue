@@ -58,9 +58,11 @@ public abstract class Movable extends GameElement {
 	}
 
 	public void die() {
-		if (this instanceof Hero)
+		if (this instanceof Hero) {
+			Hero.getInstance().updateHealthBar(hitpoints);
 			GameEngine.getInstance().lose();
+		}
 		GameEngine.getInstance().getCurrentRoom().getElements().remove(this);
-		GameEngine.getInstance().gui.removeImage(this);
+		GameEngine.getInstance().gui.removeImage(this);		
 	}
 }

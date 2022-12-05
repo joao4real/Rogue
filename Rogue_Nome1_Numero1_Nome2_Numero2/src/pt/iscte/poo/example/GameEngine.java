@@ -97,6 +97,7 @@ public class GameEngine implements Observer {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
 			turns++;
+			score = Math.max(0,--score);
 			Iterator<GameElement> it = getCurrentRoom().getElements().iterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
@@ -150,7 +151,7 @@ public class GameEngine implements Observer {
 		printInFile();
 		Object[] options = { "Try Again", "Exit", "Show HighscoreBoard" };
 		int n = JOptionPane.showOptionDialog(new JFrame(),
-				"Congratulations! You achieved a total score of  " + (score - turns) + " points!", "YOU WON!",
+				"Congratulations! You achieved a total score of  " + score + " points!", "YOU WON!",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
 		switch (n) {
@@ -159,6 +160,7 @@ public class GameEngine implements Observer {
 			break;
 		case JOptionPane.CANCEL_OPTION:
 			showHighScoreBoard();
+			System.exit(0);
 			break;
 		default:
 			System.exit(0);
@@ -166,9 +168,10 @@ public class GameEngine implements Observer {
 	}
 
 	public void lose() {
+		hero.getHealthBar().clear();
 		Object[] options = { "Try Again", "Exit" };
 		int n = JOptionPane.showOptionDialog(new JFrame(),
-				"You achieved a total score of  " + (score - turns) + " points!", "YOU DIED!",
+				"You achieved a total score of  " + score + " points!", "YOU DIED!",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (n == JOptionPane.YES_OPTION)
 			restart();
@@ -190,7 +193,7 @@ public class GameEngine implements Observer {
 
 	public void printInFile() {
 		try {
-			players.add(new Player(name, score - turns));
+			players.add(new Player(name, score));
 			PointsComparator comp = new PointsComparator();
 			players.sort(comp);
 			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
@@ -199,9 +202,10 @@ public class GameEngine implements Observer {
 				pw.println(players.get(i).getName() + " -> " + players.get(i).getPoints() + " pts");
 				i++;
 			}
+			players.remove(players.size() - 1);
 			pw.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("File not found");
+			System.err.println("File not Found");
 		}
 	}
 
@@ -216,7 +220,10 @@ public class GameEngine implements Observer {
 	}
 
 	public void showHighScoreBoard() {
-
+			String highscore = "";
+			for(Player p : players)
+				highscore += p.getName() + " - " + p.getPoints() + " pts\n";
+			gui.setMessage(highscore);
 	}
 
 	public void addScore(int i) {

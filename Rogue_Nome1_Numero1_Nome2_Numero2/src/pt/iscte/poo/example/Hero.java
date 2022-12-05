@@ -95,11 +95,11 @@ public class Hero extends Movable {
 	}
 
 	public void updateHealthBar(int hitpoints) {
-		if (healthBar.isEmpty())
+		if (getHealthBar().isEmpty())
 			for (int i = 0; i < MAXIMUM_HP / 2; i++)
-				healthBar.add(GameElement.create("Green", new Point2D(i + 1, GameEngine.GRID_HEIGHT), null));
+				getHealthBar().add(GameElement.create("Green", new Point2D(i + 1, GameEngine.GRID_HEIGHT), null));
 		else {
-			healthBar.forEach(e -> GameEngine.getInstance().gui.removeImage(e));
+			getHealthBar().forEach(e -> GameEngine.getInstance().gui.removeImage(e));
 			String code = "";
 			for (int i = 0; i < MAXIMUM_HP / 2; i++) {
 				if (i * 2 < hitpoints - 1)
@@ -108,10 +108,10 @@ public class Hero extends Movable {
 					code = "GreenRed";
 				if (i * 2 >= hitpoints)
 					code = "Red";
-				healthBar.get(i).setName(code);
+				getHealthBar().get(i).setName(code);
 			}
 		}
-		healthBar.forEach(e -> GameEngine.getInstance().gui.addImage(e));
+		getHealthBar().forEach(e -> GameEngine.getInstance().gui.addImage(e));
 	}
 
 	public void updateInventory() {
@@ -176,6 +176,10 @@ public class Hero extends Movable {
 			if (inventory[i] != null)
 				return false;
 		return true;
+	}
+
+	public ArrayList<GameElement> getHealthBar() {
+		return healthBar;
 	}
 
 }
