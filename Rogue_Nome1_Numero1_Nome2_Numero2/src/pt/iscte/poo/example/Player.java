@@ -3,8 +3,8 @@ package pt.iscte.poo.example;
 import java.util.Scanner;
 
 public class Player {
-	String name;
-	int points;
+	private String name;
+	private int points;
 
 	public Player(String name, int points) {
 		this.name = name;

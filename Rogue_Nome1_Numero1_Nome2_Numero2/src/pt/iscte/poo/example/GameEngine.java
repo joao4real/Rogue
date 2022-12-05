@@ -194,7 +194,11 @@ public class GameEngine implements Observer {
 			PointsComparator comp = new PointsComparator();
 			players.sort(comp);
 			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
-			players.forEach(p -> pw.println(p.name + " -> " + p.points + " pts"));
+			int i = 0;
+			while (i < 5) {
+				pw.println(players.get(i).getName() + " -> " + players.get(i).getPoints() + " pts");
+				i++;
+			}
 			pw.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
