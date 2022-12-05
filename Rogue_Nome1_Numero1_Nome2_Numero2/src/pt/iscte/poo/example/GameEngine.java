@@ -97,7 +97,7 @@ public class GameEngine implements Observer {
 			Direction d = Direction.directionFor(key);
 			hero.move(d);
 			turns++;
-			score = Math.max(0,--score);
+			score = Math.max(0, --score);
 			Iterator<GameElement> it = getCurrentRoom().getElements().iterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
@@ -170,9 +170,8 @@ public class GameEngine implements Observer {
 	public void lose() {
 		hero.getHealthBar().clear();
 		Object[] options = { "Try Again", "Exit" };
-		int n = JOptionPane.showOptionDialog(new JFrame(),
-				"You achieved a total score of  " + score + " points!", "YOU DIED!",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		int n = JOptionPane.showOptionDialog(new JFrame(), "You achieved a total score of  " + score + " points!",
+				"YOU DIED!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (n == JOptionPane.YES_OPTION)
 			restart();
 		else
@@ -197,12 +196,10 @@ public class GameEngine implements Observer {
 			PointsComparator comp = new PointsComparator();
 			players.sort(comp);
 			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
-			int i = 0;
-			while (i < 5) {
+			for (int i = 0; i < 5 && i < players.size(); i++)
 				pw.println(players.get(i).getName() + " -> " + players.get(i).getPoints() + " pts");
-				i++;
-			}
-			players.remove(players.size() - 1);
+			if (players.size() > 5)
+				players.remove(players.size() - 1);
 			pw.close();
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found");
@@ -220,10 +217,10 @@ public class GameEngine implements Observer {
 	}
 
 	public void showHighScoreBoard() {
-			String highscore = "";
-			for(Player p : players)
-				highscore += p.getName() + " - " + p.getPoints() + " pts\n";
-			gui.setMessage(highscore);
+		String highscore = "";
+		for (Player p : players)
+			highscore += p.getName() + " - " + p.getPoints() + " pts\n";
+		gui.setMessage(highscore);
 	}
 
 	public void addScore(int i) {
