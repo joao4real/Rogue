@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.function.Predicate;
 
 import javax.swing.JFrame;
@@ -64,6 +65,7 @@ public class GameEngine implements Observer {
 
 	public void start() {
 		hero = Hero.getInstance();
+		getHighScorePlayers();
 		addRoom(STARTING_MAP);
 		currentRoom = STARTING_MAP;
 		getCurrentRoom().getMap().forEach(g -> gui.addImage(g));
@@ -143,7 +145,6 @@ public class GameEngine implements Observer {
 	}
 
 	public void win() {
-		players.add(new Player(name, score));
 		printInFile();
 		Object[] options = { "Try Again", "Exit", "Show HighscoreBoard" };
 		int n = JOptionPane.showOptionDialog(new JFrame(),
@@ -171,22 +172,45 @@ public class GameEngine implements Observer {
 		else
 			System.exit(0);
 	}
+
+	public void getHighScorePlayers() {
+		try {
+			Scanner playerScanner = new Scanner(new File("highscore.txt"));
+			while (playerScanner.hasNextLine()) {
+				players.add(createPlayer(playerScanner.nextLine()));
+			}
+			playerScanner.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("File not Found");
+		}
+	}
+
+	public Player createPlayer(String line) {
+			Scanner sc = new Scanner(line);
+			String name = sc.next();
+			sc.next();
+			int points = sc.nextInt();
+			sc.close();
+			return new Player(name,points);
+	}
+	
 	public void printInFile() {
 		try {
-		PointsComparator comp = new PointsComparator();
-		players.sort(comp);
-		PrintWriter pw = new PrintWriter(new File("highscore.txt"));
-		players.forEach(p -> pw.println(p));
-		}catch (FileNotFoundException e) {
+			PointsComparator comp = new PointsComparator();
+			players.sort(comp);
+			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
+			players.forEach(p -> pw.println(p.name + " -> " + p.points + " pts"));
+			pw.close();
+		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 		}
-}
-	
+	}
+
 	private class PointsComparator implements Comparator<Player> {
-		
+
 		@Override
 		public int compare(Player p1, Player p2) {
-			if(p1.getPoints() == p2.getPoints())
+			if (p1.getPoints() == p2.getPoints())
 				return String.CASE_INSENSITIVE_ORDER.compare(p1.getName(), p2.getName());
 			return p1.getPoints() - p2.getPoints();
 		}

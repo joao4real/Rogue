@@ -16,9 +16,4 @@ public class Player {
 	public int getPoints() {
 		return points;
 	}
-
-	@Override
-	public String toString() {
-		return name + " -> " + points + " pts";
-	}
 }
