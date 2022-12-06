@@ -72,8 +72,11 @@ public class GameEngine implements Observer {
 		addObjects();
 		gui.update();
 		name = gui.askUser("Choose your Nickname");
+		if (name == null)
+			System.exit(0);
 		if (name.equals(""))
 			name = "Unknown";
+		name = name.trim();
 		gui.setStatusMessage("ROGUE | Nickname: " + name + " | Score: " + score + " | Turns: " + turns);
 	}
 
@@ -169,7 +172,7 @@ public class GameEngine implements Observer {
 
 	public void lose() {
 		hero.getHealthBar().clear();
-		Object[] options = { "Try Again", "Exit" };
+		Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!" };
 		int n = JOptionPane.showOptionDialog(new JFrame(), "You achieved a total score of  " + score + " points!",
 				"YOU DIED!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (n == JOptionPane.YES_OPTION)
@@ -197,7 +200,7 @@ public class GameEngine implements Observer {
 			players.sort(comp);
 			PrintWriter pw = new PrintWriter(new File("highscore.txt"));
 			for (int i = 0; i < 5 && i < players.size(); i++)
-				pw.println(players.get(i).getName() + " -> " + players.get(i).getPoints() + " pts");
+				pw.println(players.get(i));
 			if (players.size() > 5)
 				players.remove(players.size() - 1);
 			pw.close();
@@ -217,13 +220,14 @@ public class GameEngine implements Observer {
 	}
 
 	public void showHighScoreBoard() {
-		String highscore = "";
+		String highscore = "TOP 5 PLAYERS\n\n";
+		
 		for (Player p : players)
-			highscore += p.getName() + " - " + p.getPoints() + " pts\n";
+			highscore += p+"\n";
 		gui.setMessage(highscore);
 	}
 
 	public void addScore(int i) {
 		score += i;
-	}
+	} 
 }

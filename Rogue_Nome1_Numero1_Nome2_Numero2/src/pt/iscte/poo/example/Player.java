@@ -1,7 +1,5 @@
 package pt.iscte.poo.example;
 
-import java.util.Scanner;
-
 public class Player {
 	private String name;
 	private int points;
@@ -12,14 +10,17 @@ public class Player {
 	}
 
 	public static Player playerFromLine(String line) {
-		Scanner sc = new Scanner(line);
-		String name = sc.next();
-		sc.next();
-		int points = sc.nextInt();
-		sc.close();
+		String[] strings = line.split("->");
+		String name = strings[0].trim();
+		int points = Integer.parseInt(strings[1].split("pts")[0].trim());
 		return new Player(name, points);
 	}
-	
+
+	@Override
+	public String toString() {
+		return name + " -> " + points + " pts";
+	}
+
 	public String getName() {
 		return name;
 	}
