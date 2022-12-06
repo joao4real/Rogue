@@ -37,4 +37,5 @@ public abstract class Item extends GameElement {
 		e.setPosition(Hero.getInstance().getPosition());
 		GameEngine.getInstance().getCurrentRoom().addElement(e);
 	}
+
 }

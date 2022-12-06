@@ -12,18 +12,40 @@ public class Thief extends Movable {
 	public Thief(Point2D point) {
 		super(point, "Thief", MAXIMUM_HP, DAMAGE);
 	}
+	
+	public GameElement getStolenElement() {
+		return stolenElement;
+	}
 
 	@Override
 	public void move(Direction d) {
-		d = Direction.forVector(super.position.vectorTo(GameEngine.getInstance().getHero().getPosition()));
-		if (stolenElement != null || GameEngine.getInstance().getHero().isInventoryEmpty())
+		d = Direction.forVector(super.position.vectorTo(Hero.getInstance().getPosition()));
+		if (stolenElement != null || Hero.getInstance().isInventoryEmpty())
 			d = d.opposite();
 		super.move(d);
 	}
 
+	@Override
+	public void attack(Movable m) {
+		if (m instanceof Hero) {
+			removeRandomElement();
+			return;
+		}
+	}
+
+	@Override
+	public void die() {
+		if (stolenElement != null) {
+			stolenElement.setPosition(super.position);
+			GameEngine.getInstance().gui.addImage(stolenElement);
+			GameEngine.getInstance().getCurrentRoom().addElement(stolenElement);
+		}
+		super.die();
+	}
+	
 	public void removeRandomElement() {
-		GameElement[] inventory = GameEngine.getInstance().getHero().getInventory();
-		if (GameEngine.getInstance().getHero().isInventoryEmpty())
+		GameElement[] inventory = Hero.getInstance().getInventory();
+		if (Hero.getInstance().isInventoryEmpty())
 			return;
 		int i = (int) (Math.random() * inventory.length);
 		GameElement e = inventory[i];
@@ -37,25 +59,4 @@ public class Thief extends Movable {
 		GameEngine.getInstance().gui.removeImage(e);
 	}
 
-	@Override
-	public void attack(Movable m) {
-		if (m instanceof Hero) {
-			removeRandomElement();
-			return;
-		}
-	}
-
-	public GameElement getStolenElement() {
-		return stolenElement;
-	}
-
-	@Override
-	public void die() {
-		if (stolenElement != null) {
-			stolenElement.setPosition(super.position);
-			GameEngine.getInstance().gui.addImage(stolenElement);
-			GameEngine.getInstance().getCurrentRoom().addElement(stolenElement);
-		}
-		super.die();
-	}
 }

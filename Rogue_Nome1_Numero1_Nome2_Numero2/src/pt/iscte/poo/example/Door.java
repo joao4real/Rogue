@@ -39,14 +39,14 @@ public class Door extends GameElement {
 	public Point2D getHeroPoint() {
 		return heroPoint;
 	}
+	
+	public boolean isOpen() {
+		return isOpen;
+	}
 
 	public void open() {
 		isWalkable = true;
 		isOpen = true;
-	}
-
-	public boolean isOpen() {
-		return isOpen;
 	}
 
 	public void checkDoor(){
@@ -55,4 +55,5 @@ public class Door extends GameElement {
 			DOOR_TO_OPEN = false;
 		}
 	}
+
 }

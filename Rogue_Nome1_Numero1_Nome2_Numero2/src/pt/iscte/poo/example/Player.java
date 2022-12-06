@@ -1,6 +1,7 @@
 package pt.iscte.poo.example;
 
 public class Player {
+	
 	private String name;
 	private int points;
 
@@ -16,11 +17,6 @@ public class Player {
 		return new Player(name, points);
 	}
 
-	@Override
-	public String toString() {
-		return name + " -> " + points + " pts";
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -28,4 +24,10 @@ public class Player {
 	public int getPoints() {
 		return points;
 	}
+
+	@Override
+	public String toString() {
+		return name + " -> " + points + " pts";
+	}
+
 }

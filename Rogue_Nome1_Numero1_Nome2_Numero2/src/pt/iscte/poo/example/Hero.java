@@ -36,6 +36,37 @@ public class Hero extends Movable {
 		super(point, "Hero", MAXIMUM_HP, DAMAGE);
 		updateHeroBar();
 	}
+	
+	public int getInventoryPointer() {
+		return inventoryPointer;
+	}
+
+	public GameElement[] getInventory() {
+		return inventory;
+	}
+	
+	public ArrayList<GameElement> getHealthBar() {
+		return healthBar;
+	}
+
+	public void setPoisonStatus(boolean currentStatus) {
+		poisoned = currentStatus;
+	}
+
+	public boolean isInventoryEmpty() {
+		for (int i = 0; i < inventory.length; i++)
+			if (inventory[i] != null)
+				return false;
+		return true;
+	}
+
+	@Override
+	public void setHitpoints(int value) {
+		if (hasItem("Armor") && Math.random() > Armor.DODGE_CHANCE && value < 0)
+			return;
+		super.setHitpoints(value);
+		updateHealthBar(super.hitpoints);
+	}
 
 	@Override
 	public void move(Direction dir) {
@@ -84,14 +115,6 @@ public class Hero extends Movable {
 	public void attack(Movable m) {
 		int i = hasItem("Sword") ? -Sword.EXTRA_DAMAGE : 0;
 		m.setHitpoints(damage + i);
-	}
-
-	@Override
-	public void setHitpoints(int value) {
-		if (hasItem("Armor") && Math.random() > Armor.DODGE_CHANCE && value < 0)
-			return;
-		super.setHitpoints(value);
-		updateHealthBar(super.hitpoints);
 	}
 
 	public void updateHealthBar(int hitpoints) {
@@ -157,29 +180,6 @@ public class Hero extends Movable {
 		if (keybind == KeyEvent.VK_Q && inventory[inventoryPointer] != null)
 			((Item) inventory[inventoryPointer]).drop(inventoryPointer);
 
-	}
-
-	public int getInventoryPointer() {
-		return inventoryPointer;
-	}
-
-	public GameElement[] getInventory() {
-		return inventory;
-	}
-
-	public void setPoisonStatus(boolean currentStatus) {
-		poisoned = currentStatus;
-	}
-
-	public boolean isInventoryEmpty() {
-		for (int i = 0; i < inventory.length; i++)
-			if (inventory[i] != null)
-				return false;
-		return true;
-	}
-
-	public ArrayList<GameElement> getHealthBar() {
-		return healthBar;
 	}
 
 }

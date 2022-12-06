@@ -6,7 +6,6 @@ public class Backpack extends GameElement {
 
 	public Backpack(Point2D point) {
 		super(point, "Backpack");
-		System.out.println("Back");
 	}
 
 }

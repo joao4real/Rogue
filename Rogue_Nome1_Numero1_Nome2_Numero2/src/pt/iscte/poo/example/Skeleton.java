@@ -19,4 +19,5 @@ public class Skeleton extends Movable {
 			super.move(d);
 		moveTurn = moveTurn ? false : true;
 	}
+
 }

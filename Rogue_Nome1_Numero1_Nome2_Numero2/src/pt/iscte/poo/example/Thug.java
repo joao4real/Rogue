@@ -15,7 +15,7 @@ public class Thug extends Movable {
 
 	@Override
 	public void move(Direction d) {
-		super.move(Direction.forVector(super.position.vectorTo((GameEngine.getInstance().getHero()).getPosition())));
+		super.move(Direction.forVector(super.position.vectorTo(Hero.getInstance().getPosition())));
 	}
 
 	@Override

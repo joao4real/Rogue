@@ -58,11 +58,7 @@ public class GameEngine implements Observer {
 	public Room getCurrentRoom() {
 		return genericSearch(rooms, r -> r.getName().equals(currentRoom));
 	}
-
-	public Hero getHero() {
-		return hero;
-	}
-
+	
 	public void start() {
 		hero = Hero.getInstance();
 		getHighScorePlayers();
@@ -172,7 +168,7 @@ public class GameEngine implements Observer {
 
 	public void lose() {
 		hero.getHealthBar().clear();
-		Object[] options = { "Try Again", "Exit, I´m going to Rage Quit!" };
+		Object[] options = { "Try Again", "Exit, Iï¿½m going to Rage Quit!" };
 		int n = JOptionPane.showOptionDialog(new JFrame(), "You achieved a total score of  " + score + " points!",
 				"YOU DIED!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (n == JOptionPane.YES_OPTION)

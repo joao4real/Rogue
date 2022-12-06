@@ -7,4 +7,5 @@ public class Green extends GameElement {
 	public Green(Point2D point) {
 		super(point,"Green");
 	}
+
 }

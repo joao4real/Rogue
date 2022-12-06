@@ -11,4 +11,5 @@ public class Frame extends GameElement {
 	public int getLayer() {
 		return 0;
 	}
+
 }

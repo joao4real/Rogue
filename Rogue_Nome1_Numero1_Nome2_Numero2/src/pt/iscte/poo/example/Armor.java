@@ -9,4 +9,5 @@ public class Armor extends Item {
 	public Armor(Point2D point) {
 		super(point, "Armor");
 	}
+
 }

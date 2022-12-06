@@ -13,4 +13,5 @@ public abstract class Consumable extends Item {
 		Hero.getInstance().getInventory()[Hero.getInstance().getInventoryPointer()] = null;
 
 	}
+
 }

@@ -16,4 +16,5 @@ public class HealingPotion extends Consumable {
 		Hero.getInstance().setPoisonStatus(false);
 		super.consume();
 	}
+	
 }
